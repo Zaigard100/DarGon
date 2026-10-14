@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.18.name",
+  "tiles": [
+    "...#.....",
+    ".#.#.###.",
+    ".#...#.#.",
+    ".#####.#.",
+    ".....#.#.",
+    "####.#.#.",
+    "...#.#.#.",
+    ".#.#.#.#.",
+    ".#...#..."
+  ],
+  "spawn": [0, 8],
+  "entities": [
+    { "prefab": "item", "at": [6, 3], "item": { "id": "coins", "count": 10 } },
+    { "prefab": "stairs", "id": "Stair1", "at": [2, 4], "enabled": false, "next": "19" },
+    { "prefab": "button", "id": "but1", "at": [6, 2], "onUse": "but1Pressed()" },
+    { "prefab": "button", "id": "but2", "at": [2, 4], "enabled": false, "onUse": "but2Pressed()" },
+    {
+      "prefab": "button",
+      "id": "but3",
+      "at": [0, 0],
+      "enabled": false,
+      "onUse": ["entity('Stair1').enable()", "self.disable()"]
+    }
+  ],
+  "script": "18.dgs"
+}

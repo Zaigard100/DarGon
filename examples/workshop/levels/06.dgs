@@ -1,0 +1,13 @@
+// Стражи ходят туда и обратно: patrol() из общей библиотеки lib/patrol.
+use "lib/patrol"
+
+patrol("s1", line(1, 2, 11, 2), 0.30, 4)
+patrol("s2", line(11, 3, 1, 3), 0.24, 2)
+patrol("s3", line(1, 5, 11, 5), 0.27, 2)
+patrol("s4", line(11, 6, 1, 6), 0.20, 4)
+
+// Страж далеко от середины ряда (x = 6)?
+def far06(id, d) {
+    dx = entity(id).x - 6
+    return dx * dx >= d * d
+}

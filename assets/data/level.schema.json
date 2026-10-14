@@ -1,0 +1,698 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "level.schema.json",
+  "title": "DarGon: уровень",
+  "description": "Сгенерировано level-check --write-schema из префабов и items.json. Не править вручную.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["formatVersion", "name", "tiles", "spawn"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "formatVersion": { "const": 1 },
+    "name": { "$ref": "#/$defs/text", "description": "Название уровня: ключ локализации \"@level.05.name\"." },
+    "comment": { "type": "string" },
+    "dark": { "type": "boolean", "description": "Тёмный уровень: видно только вокруг игрока." },
+    "checkpoint": { "type": "boolean", "description": "Контрольная точка: при входе игра сохраняется." },
+    "legend": {
+      "type": "object",
+      "propertyNames": { "minLength": 1, "maxLength": 1 },
+      "additionalProperties": { "enum": ["floor", "wall"] },
+      "description": "Символ карты → тип клетки. По умолчанию: \".\" — floor, \"#\" — wall."
+    },
+    "tiles": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Карта: строки одинаковой длины, Y растёт вниз."
+    },
+    "edges": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[.#1-8]+$" },
+      "description": "Ручные края стен, размером с карту: \".\" — авто, \"#\" — без края, 1–8 — край (порядок WallEdge)."
+    },
+    "spawn": { "$ref": "#/$defs/point", "description": "Точка появления игрока [x, y]." },
+    "script": { "type": "string", "pattern": "\\.dgs$", "description": "Файл DGScript рядом с уровнем." },
+    "entities": { "type": "array", "items": { "$ref": "#/$defs/entity" } }
+  },
+  "$defs": {
+    "point": { "type": "array", "items": { "type": "integer" }, "minItems": 2, "maxItems": 2 },
+    "text": {
+      "description": "Ключ локализации \"@...\" или (для черновика) строка / массив строк.",
+      "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "array", "items": { "type": "string" } }]
+    },
+    "direction": { "enum": ["right", "down", "left", "up"] },
+    "direction8": { "enum": ["right", "down_right", "down", "down_left", "left", "up_left", "up", "up_right"] },
+    "color": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" },
+    "level": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_]+(/[A-Za-z0-9_]+)*$",
+      "description": "id уровня из списка levels в pack.json"
+    },
+    "damage": {
+      "anyOf": [
+        { "type": "integer", "minimum": 0 },
+        { "const": "kill" },
+        { "type": "array", "items": { "type": "integer", "minimum": 0 }, "minItems": 2, "maxItems": 2 }
+      ]
+    },
+    "handler": {
+      "description": "Код DGScript: строка или массив строк (по строке кода на элемент).",
+      "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
+    },
+    "itemStack": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "enum": ["coins", "potion", "shield", "torch", "trap_sight", "speed_potion", "slow_potion", "key", "egg"]
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "id": { "const": "coins" } } },
+          "then": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": { "id": { "const": "coins" }, "count": { "type": "integer", "minimum": 1, "maximum": 9999 } },
+            "required": ["id"]
+          }
+        },
+        {
+          "if": { "properties": { "id": { "const": "potion" } } },
+          "then": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": { "id": { "const": "potion" }, "count": { "type": "integer", "minimum": 1, "maximum": 99 } },
+            "required": ["id"]
+          }
+        },
+        {
+          "if": { "properties": { "id": { "const": "shield" } } },
+          "then": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": { "id": { "const": "shield" }, "count": { "type": "integer", "minimum": 1, "maximum": 99 } },
+            "required": ["id"]
+          }
+        },
+        {
+          "if": { "properties": { "id": { "const": "torch" } } },
+          "then": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": { "id": { "const": "torch" }, "count": { "type": "integer", "minimum": 1, "maximum": 99 } },
+            "required": ["id"]
+          }
+        },
+        {
+          "if": { "properties": { "id": { "const": "trap_sight" } } },
+          "then": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": { "const": "trap_sight" },
+              "count": { "type": "integer", "minimum": 1, "maximum": 99 }
+            },
+            "required": ["id"]
+          }
+        },
+        {
+          "if": { "properties": { "id": { "const": "speed_potion" } } },
+          "then": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": { "const": "speed_potion" },
+              "count": { "type": "integer", "minimum": 1, "maximum": 99 },
+              "power": { "type": "number", "minimum": 1, "description": "Множитель скорости." }
+            },
+            "required": ["id", "power"]
+          }
+        },
+        {
+          "if": { "properties": { "id": { "const": "slow_potion" } } },
+          "then": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": { "const": "slow_potion" },
+              "count": { "type": "integer", "minimum": 1, "maximum": 99 },
+              "power": { "type": "number", "minimum": 1, "description": "Во сколько раз замедляет." }
+            },
+            "required": ["id", "power"]
+          }
+        },
+        {
+          "if": { "properties": { "id": { "const": "key" } } },
+          "then": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": { "const": "key" },
+              "count": { "type": "integer", "minimum": 1, "maximum": 1 },
+              "key": { "type": "string", "minLength": 1, "description": "Открывает двери и сундуки с таким же key." },
+              "color": { "$ref": "#/$defs/color", "description": "Цвет ключа.", "default": "#FFFFFF" }
+            },
+            "required": ["id", "key"]
+          }
+        },
+        {
+          "if": { "properties": { "id": { "const": "egg" } } },
+          "then": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": { "const": "egg" },
+              "count": { "type": "integer", "minimum": 1, "maximum": 1 },
+              "code": {
+                "type": "string",
+                "enum": ["4601025111298", "jokkeer_lovushcera", "inf"],
+                "description": "Какая пасхалка срабатывает при использовании."
+              }
+            },
+            "required": ["id", "code"]
+          }
+        }
+      ]
+    },
+    "offers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["item", "price"],
+        "properties": {
+          "item": { "$ref": "#/$defs/itemStack" },
+          "price": { "type": "integer", "minimum": 0 },
+          "stock": { "type": "integer", "minimum": 1, "description": "Сколько штук в продаже (по умолчанию 1)." }
+        }
+      }
+    },
+    "entity": {
+      "type": "object",
+      "required": ["prefab", "at"],
+      "properties": {
+        "prefab": {
+          "anyOf": [
+            {
+              "enum": [
+                "bushes",
+                "button",
+                "chest",
+                "crossbow",
+                "door",
+                "flamethrower",
+                "fragile_floor",
+                "hidden_trap",
+                "item",
+                "kamikaze",
+                "shop",
+                "smart_crossbow",
+                "spikes",
+                "stairs",
+                "tablet",
+                "teleport",
+                "zone"
+              ]
+            },
+            { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" }
+          ]
+        }
+      },
+      "allOf": [
+        { "if": { "properties": { "prefab": { "const": "bushes" } } }, "then": { "$ref": "#/$defs/prefab_bushes" } },
+        { "if": { "properties": { "prefab": { "const": "button" } } }, "then": { "$ref": "#/$defs/prefab_button" } },
+        { "if": { "properties": { "prefab": { "const": "chest" } } }, "then": { "$ref": "#/$defs/prefab_chest" } },
+        { "if": { "properties": { "prefab": { "const": "crossbow" } } }, "then": { "$ref": "#/$defs/prefab_crossbow" } },
+        { "if": { "properties": { "prefab": { "const": "door" } } }, "then": { "$ref": "#/$defs/prefab_door" } },
+        {
+          "if": { "properties": { "prefab": { "const": "flamethrower" } } },
+          "then": { "$ref": "#/$defs/prefab_flamethrower" }
+        },
+        {
+          "if": { "properties": { "prefab": { "const": "fragile_floor" } } },
+          "then": { "$ref": "#/$defs/prefab_fragile_floor" }
+        },
+        {
+          "if": { "properties": { "prefab": { "const": "hidden_trap" } } },
+          "then": { "$ref": "#/$defs/prefab_hidden_trap" }
+        },
+        { "if": { "properties": { "prefab": { "const": "item" } } }, "then": { "$ref": "#/$defs/prefab_item" } },
+        { "if": { "properties": { "prefab": { "const": "kamikaze" } } }, "then": { "$ref": "#/$defs/prefab_kamikaze" } },
+        { "if": { "properties": { "prefab": { "const": "shop" } } }, "then": { "$ref": "#/$defs/prefab_shop" } },
+        {
+          "if": { "properties": { "prefab": { "const": "smart_crossbow" } } },
+          "then": { "$ref": "#/$defs/prefab_smart_crossbow" }
+        },
+        { "if": { "properties": { "prefab": { "const": "spikes" } } }, "then": { "$ref": "#/$defs/prefab_spikes" } },
+        { "if": { "properties": { "prefab": { "const": "stairs" } } }, "then": { "$ref": "#/$defs/prefab_stairs" } },
+        { "if": { "properties": { "prefab": { "const": "tablet" } } }, "then": { "$ref": "#/$defs/prefab_tablet" } },
+        { "if": { "properties": { "prefab": { "const": "teleport" } } }, "then": { "$ref": "#/$defs/prefab_teleport" } },
+        { "if": { "properties": { "prefab": { "const": "zone" } } }, "then": { "$ref": "#/$defs/prefab_zone" } }
+      ]
+    },
+    "prefab_bushes": {
+      "type": "object",
+      "description": "Кусты: прямоугольник width×height, закрывающий игрока сверху.",
+      "additionalProperties": false,
+      "properties": {
+        "prefab": { "const": "bushes" },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$",
+          "description": "Уникальный id для скриптов: entity('id')."
+        },
+        "tags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_]*$" },
+          "description": "Групповые метки для скриптов."
+        },
+        "at": { "$ref": "#/$defs/point", "description": "Клетка [x, y]." },
+        "enabled": { "type": "boolean", "description": "false — создаётся выключенной, включает скрипт." },
+        "comment": { "type": "string" },
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 }
+      },
+      "required": ["prefab", "at", "width", "height"]
+    },
+    "prefab_button": {
+      "type": "object",
+      "description": "Кнопка: встать и нажать «использовать» — выполняется onUse.",
+      "additionalProperties": false,
+      "properties": {
+        "prefab": { "const": "button" },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$",
+          "description": "Уникальный id для скриптов: entity('id')."
+        },
+        "tags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_]*$" },
+          "description": "Групповые метки для скриптов."
+        },
+        "at": { "$ref": "#/$defs/point", "description": "Клетка [x, y]." },
+        "enabled": { "type": "boolean", "description": "false — создаётся выключенной, включает скрипт." },
+        "comment": { "type": "string" },
+        "onUse": { "$ref": "#/$defs/handler", "description": "Код DGScript для события use." }
+      },
+      "required": ["prefab", "at"]
+    },
+    "prefab_chest": {
+      "type": "object",
+      "description": "Сундук: открывается с соседней клетки, отдаёт предметы.",
+      "additionalProperties": false,
+      "properties": {
+        "prefab": { "const": "chest" },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$",
+          "description": "Уникальный id для скриптов: entity('id')."
+        },
+        "tags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_]*$" },
+          "description": "Групповые метки для скриптов."
+        },
+        "at": { "$ref": "#/$defs/point", "description": "Клетка [x, y]." },
+        "enabled": { "type": "boolean", "description": "false — создаётся выключенной, включает скрипт." },
+        "comment": { "type": "string" },
+        "items": { "type": "array", "items": { "$ref": "#/$defs/itemStack" }, "default": [] },
+        "locked": { "type": "boolean", "default": false },
+        "key": { "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }], "default": null },
+        "open": { "type": "boolean", "default": false }
+      },
+      "required": ["prefab", "at"]
+    },
+    "prefab_crossbow": {
+      "type": "object",
+      "description": "Арбалет: каждые period секунд стреляет стрелой в направлении dir.",
+      "additionalProperties": false,
+      "properties": {
+        "prefab": { "const": "crossbow" },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$",
+          "description": "Уникальный id для скриптов: entity('id')."
+        },
+        "tags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_]*$" },
+          "description": "Групповые метки для скриптов."
+        },
+        "at": { "$ref": "#/$defs/point", "description": "Клетка [x, y]." },
+        "enabled": { "type": "boolean", "description": "false — создаётся выключенной, включает скрипт." },
+        "comment": { "type": "string" },
+        "dir": { "$ref": "#/$defs/direction8" },
+        "period": { "type": "number", "minimum": 0.1, "default": 4.0 }
+      },
+      "required": ["prefab", "at", "dir"]
+    },
+    "prefab_door": {
+      "type": "object",
+      "description": "Дверь с замком: открывается и закрывается с соседней клетки ключом key.",
+      "additionalProperties": false,
+      "properties": {
+        "prefab": { "const": "door" },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$",
+          "description": "Уникальный id для скриптов: entity('id')."
+        },
+        "tags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_]*$" },
+          "description": "Групповые метки для скриптов."
+        },
+        "at": { "$ref": "#/$defs/point", "description": "Клетка [x, y]." },
+        "enabled": { "type": "boolean", "description": "false — создаётся выключенной, включает скрипт." },
+        "comment": { "type": "string" },
+        "key": { "type": "string", "minLength": 1 },
+        "open": { "type": "boolean", "default": false },
+        "facing": { "type": "integer", "minimum": 0, "maximum": 3, "description": "Кадр спрайта двери.", "default": 0 }
+      },
+      "required": ["prefab", "at", "key"]
+    },
+    "prefab_flamethrower": {
+      "type": "object",
+      "description": "Огнемёт: пламя по линии dir растёт на клетку каждые period секунд до length, затем гаснет.",
+      "additionalProperties": false,
+      "properties": {
+        "prefab": { "const": "flamethrower" },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$",
+          "description": "Уникальный id для скриптов: entity('id')."
+        },
+        "tags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_]*$" },
+          "description": "Групповые метки для скриптов."
+        },
+        "at": { "$ref": "#/$defs/point", "description": "Клетка [x, y]." },
+        "enabled": { "type": "boolean", "description": "false — создаётся выключенной, включает скрипт." },
+        "comment": { "type": "string" },
+        "dir": { "$ref": "#/$defs/direction", "default": "right" },
+        "length": { "type": "integer", "minimum": 0, "description": "Максимальная длина пламени.", "default": 3 },
+        "stage": { "type": "integer", "minimum": 0, "description": "Длина пламени в начале.", "default": 0 },
+        "period": { "type": "number", "minimum": 0.1, "default": 2.0 }
+      },
+      "required": ["prefab", "at"]
+    },
+    "prefab_fragile_floor": {
+      "type": "object",
+      "description": "Хрупкий пол: каждые period секунд под игроком трескается; после 3 трещин — провал.",
+      "additionalProperties": false,
+      "properties": {
+        "prefab": { "const": "fragile_floor" },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$",
+          "description": "Уникальный id для скриптов: entity('id')."
+        },
+        "tags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_]*$" },
+          "description": "Групповые метки для скриптов."
+        },
+        "at": { "$ref": "#/$defs/point", "description": "Клетка [x, y]." },
+        "enabled": { "type": "boolean", "description": "false — создаётся выключенной, включает скрипт." },
+        "comment": { "type": "string" },
+        "cracks": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3,
+          "description": "Трещин в начале: 3 — уже провал.",
+          "default": 0
+        },
+        "period": { "type": "number", "minimum": 0.1, "description": "Секунды между трещинами.", "default": 1.0 }
+      },
+      "required": ["prefab", "at"]
+    },
+    "prefab_hidden_trap": {
+      "type": "object",
+      "description": "Скрытая ловушка: 8–12 урона (щит принимает часть), срабатывает один раз и исчезает.",
+      "additionalProperties": false,
+      "properties": {
+        "prefab": { "const": "hidden_trap" },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$",
+          "description": "Уникальный id для скриптов: entity('id')."
+        },
+        "tags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_]*$" },
+          "description": "Групповые метки для скриптов."
+        },
+        "at": { "$ref": "#/$defs/point", "description": "Клетка [x, y]." },
+        "enabled": { "type": "boolean", "description": "false — создаётся выключенной, включает скрипт." },
+        "comment": { "type": "string" }
+      },
+      "required": ["prefab", "at"]
+    },
+    "prefab_item": {
+      "type": "object",
+      "description": "Предмет на полу. Подбирается «использовать», если в инвентаре есть место.",
+      "additionalProperties": false,
+      "properties": {
+        "prefab": { "const": "item" },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$",
+          "description": "Уникальный id для скриптов: entity('id')."
+        },
+        "tags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_]*$" },
+          "description": "Групповые метки для скриптов."
+        },
+        "at": { "$ref": "#/$defs/point", "description": "Клетка [x, y]." },
+        "enabled": { "type": "boolean", "description": "false — создаётся выключенной, включает скрипт." },
+        "comment": { "type": "string" },
+        "item": { "$ref": "#/$defs/itemStack" }
+      },
+      "required": ["prefab", "at", "item"]
+    },
+    "prefab_kamikaze": {
+      "type": "object",
+      "description": "Камикадзе: замечает игрока в пределах radius, идёт к нему путём не длиннее depth шагов и взрывается при касании (17–23 урона, щит принимает часть).",
+      "additionalProperties": false,
+      "properties": {
+        "prefab": { "const": "kamikaze" },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$",
+          "description": "Уникальный id для скриптов: entity('id')."
+        },
+        "tags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_]*$" },
+          "description": "Групповые метки для скриптов."
+        },
+        "at": { "$ref": "#/$defs/point", "description": "Клетка [x, y]." },
+        "enabled": { "type": "boolean", "description": "false — создаётся выключенной, включает скрипт." },
+        "comment": { "type": "string" },
+        "radius": { "type": "integer", "minimum": 1 },
+        "depth": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Максимальная длина пути к игроку в шагах; дальше камикадзе дорогу не находит.",
+          "default": 15
+        },
+        "speed": { "type": "number", "minimum": 0.1, "default": 0.8 }
+      },
+      "required": ["prefab", "at", "radius"]
+    },
+    "prefab_shop": {
+      "type": "object",
+      "description": "Лавка: открывает окно покупки с соседней клетки.",
+      "additionalProperties": false,
+      "properties": {
+        "prefab": { "const": "shop" },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$",
+          "description": "Уникальный id для скриптов: entity('id')."
+        },
+        "tags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_]*$" },
+          "description": "Групповые метки для скриптов."
+        },
+        "at": { "$ref": "#/$defs/point", "description": "Клетка [x, y]." },
+        "enabled": { "type": "boolean", "description": "false — создаётся выключенной, включает скрипт." },
+        "comment": { "type": "string" },
+        "offers": { "$ref": "#/$defs/offers" }
+      },
+      "required": ["prefab", "at", "offers"]
+    },
+    "prefab_smart_crossbow": {
+      "type": "object",
+      "description": "Арбалет с наведением: стреляет, только если игрок ближе range, и поворачивается к нему.",
+      "additionalProperties": false,
+      "properties": {
+        "prefab": { "const": "smart_crossbow" },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$",
+          "description": "Уникальный id для скриптов: entity('id')."
+        },
+        "tags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_]*$" },
+          "description": "Групповые метки для скриптов."
+        },
+        "at": { "$ref": "#/$defs/point", "description": "Клетка [x, y]." },
+        "enabled": { "type": "boolean", "description": "false — создаётся выключенной, включает скрипт." },
+        "comment": { "type": "string" },
+        "dir": { "$ref": "#/$defs/direction8", "default": "left" },
+        "period": { "type": "number", "minimum": 0.1, "default": 4.0 },
+        "range": { "type": "integer", "minimum": 1, "description": "Дальность в клетках." },
+        "diagonal": { "type": "boolean", "description": "Стрелять по диагонали.", "default": false }
+      },
+      "required": ["prefab", "at", "range"]
+    },
+    "prefab_spikes": {
+      "type": "object",
+      "description": "Шипы: после наступания через period выдвигаются и убивают; убираются через 2×period.",
+      "additionalProperties": false,
+      "properties": {
+        "prefab": { "const": "spikes" },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$",
+          "description": "Уникальный id для скриптов: entity('id')."
+        },
+        "tags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_]*$" },
+          "description": "Групповые метки для скриптов."
+        },
+        "at": { "$ref": "#/$defs/point", "description": "Клетка [x, y]." },
+        "enabled": { "type": "boolean", "description": "false — создаётся выключенной, включает скрипт." },
+        "comment": { "type": "string" },
+        "active": { "type": "boolean", "description": "Выдвинуты в начале уровня.", "default": false },
+        "period": { "type": "number", "minimum": 0.1, "description": "Секунды до срабатывания.", "default": 1.5 }
+      },
+      "required": ["prefab", "at"]
+    },
+    "prefab_stairs": {
+      "type": "object",
+      "description": "Лестница на следующий уровень. Встать на неё и нажать «использовать».",
+      "additionalProperties": false,
+      "properties": {
+        "prefab": { "const": "stairs" },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$",
+          "description": "Уникальный id для скриптов: entity('id')."
+        },
+        "tags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_]*$" },
+          "description": "Групповые метки для скриптов."
+        },
+        "at": { "$ref": "#/$defs/point", "description": "Клетка [x, y]." },
+        "enabled": { "type": "boolean", "description": "false — создаётся выключенной, включает скрипт." },
+        "comment": { "type": "string" },
+        "next": {
+          "anyOf": [{ "$ref": "#/$defs/level" }, { "type": "null" }],
+          "description": "Куда ведёт; null — конец игры.",
+          "default": null
+        },
+        "flip": { "type": "boolean", "description": "Отразить спрайт по горизонтали.", "default": false }
+      },
+      "required": ["prefab", "at"]
+    },
+    "prefab_tablet": {
+      "type": "object",
+      "description": "Табличка с текстом. Читается с соседней клетки.",
+      "additionalProperties": false,
+      "properties": {
+        "prefab": { "const": "tablet" },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$",
+          "description": "Уникальный id для скриптов: entity('id')."
+        },
+        "tags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_]*$" },
+          "description": "Групповые метки для скриптов."
+        },
+        "at": { "$ref": "#/$defs/point", "description": "Клетка [x, y]." },
+        "enabled": { "type": "boolean", "description": "false — создаётся выключенной, включает скрипт." },
+        "comment": { "type": "string" },
+        "text": { "$ref": "#/$defs/text", "description": "Ключ локализации \"@level.05.tablet1\"." }
+      },
+      "required": ["prefab", "at", "text"]
+    },
+    "prefab_teleport": {
+      "type": "object",
+      "description": "Телепорт: встать и нажать «использовать» — игрок переносится в target.",
+      "additionalProperties": false,
+      "properties": {
+        "prefab": { "const": "teleport" },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$",
+          "description": "Уникальный id для скриптов: entity('id')."
+        },
+        "tags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_]*$" },
+          "description": "Групповые метки для скриптов."
+        },
+        "at": { "$ref": "#/$defs/point", "description": "Клетка [x, y]." },
+        "enabled": { "type": "boolean", "description": "false — создаётся выключенной, включает скрипт." },
+        "comment": { "type": "string" },
+        "target": { "$ref": "#/$defs/point", "description": "Клетка назначения." }
+      },
+      "required": ["prefab", "at", "target"]
+    },
+    "prefab_zone": {
+      "type": "object",
+      "description": "Область width×height: раз в period секунд лечит или ранит игрока внутри.",
+      "additionalProperties": false,
+      "properties": {
+        "prefab": { "const": "zone" },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$",
+          "description": "Уникальный id для скриптов: entity('id')."
+        },
+        "tags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_]*$" },
+          "description": "Групповые метки для скриптов."
+        },
+        "at": { "$ref": "#/$defs/point", "description": "Клетка [x, y]." },
+        "enabled": { "type": "boolean", "description": "false — создаётся выключенной, включает скрипт." },
+        "comment": { "type": "string" },
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 },
+        "effect": { "type": "string", "enum": ["heal", "damage"] },
+        "period": { "type": "number", "minimum": 0.1 }
+      },
+      "required": ["prefab", "at", "width", "height", "effect", "period"]
+    }
+  }
+}

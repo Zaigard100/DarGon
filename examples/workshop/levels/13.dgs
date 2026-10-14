@@ -1,0 +1,15 @@
+// Наступил на кристалл — выход открыт, но и камикадзе на свободе.
+use "lib/events"
+use "lib/util"
+
+taken13 = false
+
+onStep(def(x, y) {
+    if !taken13 && x == 8 && y == 1 {
+        taken13 = true
+        // Кристалл исчезает насовсем: remove() удаляет объект из уровня.
+        entity("crystal13").remove()
+        offAll(["cage13a", "cage13b", "exit13"])
+        onAll(["k13a", "k13b"])
+    }
+})

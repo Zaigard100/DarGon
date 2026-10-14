@@ -1,0 +1,41 @@
+{
+  "$schema": "../../../assets/data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.16.name",
+  "tiles": [
+    "###########",
+    "#.........#",
+    "#.........#",
+    "#.........#",
+    "#.........#",
+    "#.........#",
+    "#.........#",
+    "#.........#",
+    "#########.#",
+    "#########.#",
+    "###########"
+  ],
+  "spawn": [1, 4],
+  "entities": [
+    { "prefab": "lamp", "at": [3, 1], "color": 0 },
+    { "prefab": "lamp", "id": "lamp16_0", "at": [3, 1], "color": 1, "enabled": false },
+    { "prefab": "lamp", "at": [4, 1], "color": 0 },
+    { "prefab": "lamp", "id": "lamp16_1", "at": [4, 1], "color": 2, "enabled": false },
+    { "prefab": "lamp", "at": [5, 1], "color": 0 },
+    { "prefab": "lamp", "id": "lamp16_2", "at": [5, 1], "color": 3, "enabled": false },
+    { "prefab": "lamp", "at": [6, 1], "color": 0 },
+    { "prefab": "lamp", "id": "lamp16_3", "at": [6, 1], "color": 4, "enabled": false },
+    { "prefab": "plate", "id": "plate16_0", "at": [5, 3], "color": 1 },
+    { "prefab": "plate", "id": "plate16_0on", "at": [5, 3], "color": 5, "enabled": false },
+    { "prefab": "plate", "id": "plate16_3", "at": [4, 4], "color": 4 },
+    { "prefab": "plate", "id": "plate16_3on", "at": [4, 4], "color": 8, "enabled": false },
+    { "prefab": "plate", "id": "plate16_1", "at": [6, 4], "color": 2 },
+    { "prefab": "plate", "id": "plate16_1on", "at": [6, 4], "color": 6, "enabled": false },
+    { "prefab": "plate", "id": "plate16_2", "at": [5, 5], "color": 3 },
+    { "prefab": "plate", "id": "plate16_2on", "at": [5, 5], "color": 7, "enabled": false },
+    { "prefab": "tablet", "at": [2, 7], "text": "@level.16.t1" },
+    { "prefab": "gate", "id": "gate16", "at": [9, 8] },
+    { "prefab": "stairs", "at": [9, 9], "next": "17" }
+  ],
+  "script": "16.dgs"
+}

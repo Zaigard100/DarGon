@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../assets/data/prefab.schema.json",
+  "id": "sentinel",
+  "description": "Страж: ранит, если оказаться в его клетке. Ходит, если его водит скрипт.",
+  "placement": "any",
+  "params": { "damage": { "type": "damage", "default": [9, 13], "description": "Урон за касание." } },
+  "components": {
+    "SpriteRef": { "region": "sentinel" },
+    "Layer": { "z": "over" },
+    "Hazard": { "damage": "$damage", "kind": "sentinel", "shieldable": true }
+  }
+}

@@ -1,0 +1,210 @@
+{
+  "$schema": "../../assets/data/pack.schema.json",
+  "format": 1,
+  "id": "workshop",
+  "name": "@pack.workshop.name",
+  "description": "@pack.workshop.desc",
+  "author": "DarGon",
+  "version": "1.0",
+  "game": "4.0.0",
+  "icon": "icon.png",
+  "start": "01",
+  "levels": [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "20"
+  ],
+  "prefabs": [
+    "gate",
+    "fake_wall",
+    "plate",
+    "lamp",
+    "crystal",
+    "digit",
+    "sentinel",
+    "snake",
+    "core",
+    "lever",
+    "lava",
+    "deco"
+  ],
+  "textures": [
+    "gate",
+    "fake_wall",
+    "plate",
+    "lamp",
+    "crystal",
+    "digit",
+    "sentinel",
+    "snake",
+    "core",
+    "lever",
+    "lava",
+    "deco"
+  ],
+  "modes": {
+    "casual": {
+      "start": [{ "id": "potion", "count": 4 }, { "id": "shield", "count": 3 }, { "id": "torch", "count": 2 }]
+    },
+    "normal": { "start": [{ "id": "potion", "count": 3 }, { "id": "shield", "count": 2 }, { "id": "torch" }] },
+    "hardcore": { "start": [{ "id": "potion" }, { "id": "torch" }] }
+  },
+  "achievements": [
+    {
+      "id": "first_day",
+      "name": "@ach.first_day.name",
+      "description": "@ach.first_day.desc",
+      "difficulty": "easy",
+      "when": { "type": "level", "level": "01" }
+    },
+    {
+      "id": "curious",
+      "name": "@ach.curious.name",
+      "description": "@ach.curious.desc",
+      "difficulty": "easy",
+      "when": { "type": "script" }
+    },
+    {
+      "id": "clockwork",
+      "name": "@ach.clockwork.name",
+      "description": "@ach.clockwork.desc",
+      "difficulty": "medium",
+      "when": { "type": "level", "level": "05", "without": ["damage"] }
+    },
+    {
+      "id": "act1",
+      "name": "@ach.act1.name",
+      "description": "@ach.act1.desc",
+      "difficulty": "easy",
+      "when": { "type": "level", "level": "05" },
+      "reward": { "unlockStart": "06" }
+    },
+    {
+      "id": "secret_room",
+      "name": "@ach.secret_room.name",
+      "description": "@ach.secret_room.desc",
+      "difficulty": "medium",
+      "hidden": true,
+      "when": { "type": "script" }
+    },
+    {
+      "id": "shopper",
+      "name": "@ach.shopper.name",
+      "description": "@ach.shopper.desc",
+      "difficulty": "easy",
+      "when": { "type": "count", "counter": "purchases", "atLeast": 1 }
+    },
+    {
+      "id": "act2",
+      "name": "@ach.act2.name",
+      "description": "@ach.act2.desc",
+      "difficulty": "medium",
+      "when": { "type": "level", "level": "10" },
+      "reward": { "unlockStart": "11" }
+    },
+    {
+      "id": "daredevil",
+      "name": "@ach.daredevil.name",
+      "description": "@ach.daredevil.desc",
+      "difficulty": "hard",
+      "when": { "type": "script" }
+    },
+    {
+      "id": "life",
+      "name": "@ach.life.name",
+      "description": "@ach.life.desc",
+      "difficulty": "easy",
+      "when": { "type": "script" }
+    },
+    {
+      "id": "act3",
+      "name": "@ach.act3.name",
+      "description": "@ach.act3.desc",
+      "difficulty": "medium",
+      "when": { "type": "level", "level": "15" },
+      "reward": { "unlockStart": "16" }
+    },
+    {
+      "id": "simon",
+      "name": "@ach.simon.name",
+      "description": "@ach.simon.desc",
+      "difficulty": "medium",
+      "when": { "type": "script" }
+    },
+    {
+      "id": "maze_runner",
+      "name": "@ach.maze_runner.name",
+      "description": "@ach.maze_runner.desc",
+      "difficulty": "hard",
+      "when": { "type": "script" }
+    },
+    {
+      "id": "sapper",
+      "name": "@ach.sapper.name",
+      "description": "@ach.sapper.desc",
+      "difficulty": "hard",
+      "when": { "type": "script" }
+    },
+    {
+      "id": "heart",
+      "name": "@ach.heart.name",
+      "description": "@ach.heart.desc",
+      "difficulty": "medium",
+      "when": { "type": "level", "level": "20" }
+    },
+    {
+      "id": "rich",
+      "name": "@ach.rich.name",
+      "description": "@ach.rich.desc",
+      "difficulty": "medium",
+      "when": { "type": "count", "counter": "coins", "atLeast": 200 }
+    },
+    {
+      "id": "untouchable",
+      "name": "@ach.untouchable.name",
+      "description": "@ach.untouchable.desc",
+      "difficulty": "hard",
+      "when": { "type": "game", "modes": ["normal"], "maxDeaths": 0 }
+    },
+    {
+      "id": "hardcore",
+      "name": "@ach.hardcore.name",
+      "description": "@ach.hardcore.desc",
+      "difficulty": "hardcore",
+      "when": { "type": "game", "modes": ["hardcore"] }
+    },
+    {
+      "id": "melted",
+      "name": "@ach.melted.name",
+      "description": "@ach.melted.desc",
+      "difficulty": "easy",
+      "hidden": true,
+      "when": { "type": "death", "kind": "lava" }
+    },
+    {
+      "id": "bitten",
+      "name": "@ach.bitten.name",
+      "description": "@ach.bitten.desc",
+      "difficulty": "easy",
+      "hidden": true,
+      "when": { "type": "death", "kind": "snake" }
+    }
+  ]
+}

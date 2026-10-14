@@ -1,0 +1,32 @@
+{
+  "$schema": "../../../data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.15.name",
+  "dark": true,
+  "checkpoint": true,
+  "tiles": [
+    "#...#..#..##",
+    "#...#..#...#",
+    "#...#.##.##.",
+    "##.##.##.##.",
+    ".........###",
+    ".#.##.##.#.#",
+    ".#.##.##.###",
+    ".#..#..#...#",
+    ".#..#..#..#."
+  ],
+  "spawn": [11, 8],
+  "entities": [
+    { "prefab": "stairs", "at": [3, 0], "next": "16" },
+    { "prefab": "stairs", "at": [1, 0], "next": "shops/shop_15" },
+    { "prefab": "fragile_floor", "at": [0, 8] },
+    { "prefab": "fragile_floor", "at": [0, 6] },
+    { "prefab": "fragile_floor", "at": [2, 5] },
+    { "prefab": "fragile_floor", "at": [5, 5] },
+    { "prefab": "fragile_floor", "at": [8, 5] },
+    { "prefab": "fragile_floor", "at": [5, 3] },
+    { "prefab": "fragile_floor", "at": [8, 3] },
+    { "prefab": "fragile_floor", "at": [11, 1] },
+    { "prefab": "tablet", "at": [2, -1], "text": "@level.15.tablet1" }
+  ]
+}

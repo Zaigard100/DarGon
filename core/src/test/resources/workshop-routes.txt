@@ -1,0 +1,213 @@
+# Маршрут бота по паку examples/workshop (WorkshopWalkthroughTest).
+# Формат команд — в тесте. После правки уровней пака поправьте маршрут.
+level 01
+go 6 4
+use
+go 6 5
+use
+go 6 7
+use
+exit 02
+level 02
+go 2 3
+use
+go 3 2
+use
+go 7 2
+use
+go 7 3
+use
+go 9 2
+use
+go 12 2
+use
+use
+go 13 2
+use
+exit 03
+level 03
+go 2 2
+use
+go 6 2
+use
+go 6 1
+go 6 2
+use
+go 6 1
+go 6 2
+use
+go 6 5
+use
+go 10 2
+use
+exit 04
+level 04
+go 2 2
+go 4 3
+go 2 4
+go 8 2
+wait 1.5
+go 14 9
+use
+exit 05
+level 05
+go 3 1
+use
+go 1 3
+use
+exit 06
+level 06
+go 6 1
+until far06('s1', 4) && far06('s2', 5)
+go 6 4
+until far06('s3', 4) && far06('s4', 5)
+go 6 7
+use
+exit 07
+level 07
+go 4 3
+until !entity('f0').enabled && phase07 < 0.25 20
+go 6 3
+until !entity('f1').enabled && phase07 < 0.25 20
+go 9 3
+until !entity('f2').enabled && phase07 < 0.25 20
+go 12 3
+until !entity('f3').enabled && phase07 < 0.25 20
+go 15 3
+use
+exit 08
+level 08
+go 13 9
+use
+exit 09
+level 09
+go 8 5
+use
+go 8 2
+use
+go 11 6
+use
+exit 10
+level 10
+go 15 3
+use
+exit 11
+level 11
+go 3 4
+go 4 4
+go 4 3
+go 4 2
+go 5 2
+go 6 2
+go 6 3
+go 6 4
+go 6 5
+go 6 6
+go 7 6
+go 8 6
+go 8 5
+go 8 4
+go 8 3
+go 8 2
+go 9 2
+go 10 2
+go 10 3
+go 10 4
+go 11 4
+go 13 4
+use
+exit 12
+level 12
+go 9 7
+until entity('tpB').enabled 10
+use
+go 9 2
+use
+go 8 4
+use
+go 9 7
+until entity('tpG').enabled 10
+use
+go 15 4
+use
+go 15 2
+use
+exit 13
+level 13
+go 8 1
+go 7 5
+go 7 6
+use
+exit 14
+level 14
+go 2 5
+use
+wait 3
+go 17 7
+use
+exit 15
+level 15
+until life.gen >= 30 20
+go 18 10
+use
+exit 16
+level 16
+go 5 4
+until ready16 20
+goe plates16[seq16[0]]
+go 5 4
+goe plates16[seq16[1]]
+go 5 4
+goe plates16[seq16[2]]
+go 5 4
+until ready16 20
+goe plates16[seq16[0]]
+go 5 4
+goe plates16[seq16[1]]
+go 5 4
+goe plates16[seq16[2]]
+go 5 4
+goe plates16[seq16[3]]
+go 5 4
+until ready16 20
+goe plates16[seq16[0]]
+go 5 4
+goe plates16[seq16[1]]
+go 5 4
+goe plates16[seq16[2]]
+go 5 4
+goe plates16[seq16[3]]
+go 5 4
+goe plates16[seq16[4]]
+go 5 4
+until !entity('gate16').enabled 5
+go 9 9
+use
+exit 17
+level 17
+go 15 11
+use
+exit 18
+level 18
+go 13 1
+go 1 1
+go 1 8
+go 7 10
+go 7 11
+use
+exit 19
+level 19
+go 11 4
+use
+exit 20
+level 20
+until active20 >= 0 20
+goe charge20
+until active20 >= 0 20
+goe charge20
+until active20 >= 0 20
+goe charge20
+until entity('stairs20').enabled 5
+go 7 1
+use
+exit end

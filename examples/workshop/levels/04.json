@@ -1,0 +1,38 @@
+{
+  "$schema": "../../../assets/data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.04.name",
+  "tiles": [
+    "#################",
+    "#.....#.........#",
+    "#.....#.........#",
+    "#...............#",
+    "#.....#.........#",
+    "#.....#.........#",
+    "#################",
+    "#################",
+    "#################",
+    "#############...#",
+    "#################"
+  ],
+  "spawn": [1, 1],
+  "entities": [
+    { "prefab": "plate", "id": "p1", "at": [2, 2], "color": 0 },
+    { "prefab": "plate", "id": "p1on", "at": [2, 2], "color": 6, "enabled": false },
+    { "prefab": "lamp", "at": [6, 2], "color": 0 },
+    { "prefab": "lamp", "id": "ok4a", "at": [6, 2], "color": 2, "enabled": false },
+    { "prefab": "plate", "id": "x4", "at": [8, 2], "color": 4 },
+    { "prefab": "plate", "id": "x4on", "at": [8, 2], "color": 8, "enabled": false },
+    { "prefab": "plate", "id": "p2", "at": [4, 3], "color": 0 },
+    { "prefab": "plate", "id": "p2on", "at": [4, 3], "color": 6, "enabled": false },
+    { "prefab": "gate", "id": "gate4", "at": [6, 3] },
+    { "prefab": "plate", "id": "p3", "at": [2, 4], "color": 0 },
+    { "prefab": "plate", "id": "p3on", "at": [2, 4], "color": 6, "enabled": false },
+    { "prefab": "lamp", "at": [6, 4], "color": 0 },
+    { "prefab": "lamp", "id": "ok4b", "at": [6, 4], "color": 2, "enabled": false },
+    { "prefab": "plate", "at": [5, 5], "color": 1 },
+    { "prefab": "tablet", "at": [10, 5], "text": "@level.04.t1" },
+    { "prefab": "stairs", "at": [14, 9], "next": "05" }
+  ],
+  "script": "04.dgs"
+}

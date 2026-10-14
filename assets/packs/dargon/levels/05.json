@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.05.name",
+  "dark": true,
+  "checkpoint": true,
+  "tiles": [
+    ".....###..#",
+    ".##.#.##.##",
+    ".##.##..###",
+    "...########",
+    "###...#...#",
+    "..####.##.#",
+    ".#...###.##",
+    ".####...##.",
+    ".#.######.#",
+    "..#......#."
+  ],
+  "spawn": [9, 0],
+  "entities": [
+    { "prefab": "hidden_trap", "at": [1, 0] },
+    { "prefab": "stairs", "at": [10, 9], "next": "06" },
+    { "prefab": "stairs", "at": [10, 7], "next": "shops/shop_05" },
+    { "prefab": "item", "at": [0, 1], "item": { "id": "coins", "count": 15 } },
+    { "prefab": "flamethrower", "at": [8, -1], "dir": "down", "length": 2, "stage": 1 },
+    { "prefab": "flamethrower", "at": [6, 8], "dir": "up", "length": 3, "stage": 1 },
+    { "prefab": "flamethrower", "at": [5, 10], "dir": "up", "length": 3, "stage": 2 },
+    { "prefab": "flamethrower", "at": [7, 10], "dir": "up", "length": 3, "stage": 1 },
+    { "prefab": "tablet", "at": [10, 8], "text": "@level.05.tablet1" }
+  ]
+}

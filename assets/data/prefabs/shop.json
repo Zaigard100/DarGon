@@ -1,0 +1,25 @@
+{
+  "$schema": "../prefab.schema.json",
+  "id": "shop",
+  "description": "Лавка: открывает окно покупки с соседней клетки.",
+  "placement": "any",
+  "params": {
+    "offers": {
+      "type": "offers"
+    }
+  },
+  "components": {
+    "SpriteRef": {
+      "region": "shop"
+    },
+    "Layer": {
+      "z": "floor"
+    },
+    "Interactable": {
+      "reach": "adjacent"
+    },
+    "ShopStock": {
+      "offers": "$offers"
+    }
+  }
+}

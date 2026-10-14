@@ -1,0 +1,22 @@
+{
+  "$schema": "manifest.schema.json",
+  "prefabs": [
+    "bushes",
+    "button",
+    "chest",
+    "crossbow",
+    "door",
+    "flamethrower",
+    "fragile_floor",
+    "hidden_trap",
+    "item",
+    "kamikaze",
+    "shop",
+    "smart_crossbow",
+    "spikes",
+    "stairs",
+    "tablet",
+    "teleport",
+    "zone"
+  ]
+}

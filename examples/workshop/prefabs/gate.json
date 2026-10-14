@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../assets/data/prefab.schema.json",
+  "id": "gate",
+  "description": "Решётка: непроходима, пока включена. Скрипт открывает её — off(id).",
+  "components": { "SpriteRef": { "region": "gate" }, "Layer": { "z": "over" }, "Blocking": {} }
+}

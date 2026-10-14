@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../assets/data/prefab.schema.json",
+  "id": "deco",
+  "description": "Украшение пола: 0 — шестерня, 1 и 2 — труба, 3 — болты, 4 — чертёж.",
+  "placement": "any",
+  "params": { "kind": { "type": "int", "default": 0, "min": 0, "max": 4, "description": "Картинка." } },
+  "components": { "SpriteRef": { "region": "deco", "frame": "$kind" }, "Layer": { "z": "floor" } }
+}

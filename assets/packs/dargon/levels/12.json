@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.12.name",
+  "dark": true,
+  "tiles": [
+    "###..######.#",
+    "####..####.#.",
+    "#..###.....#.",
+    ".##....##.#.#",
+    "########.##.#",
+    "#.##....##.##",
+    "##.###.###.##",
+    "###....###.##",
+    "######..##..#",
+    "#.###.#.#####",
+    "##...##.#####",
+    "#######..#.##",
+    "###....##.###"
+  ],
+  "spawn": [10, 2],
+  "entities": [
+    { "prefab": "hidden_trap", "at": [3, 5] },
+    { "prefab": "hidden_trap", "at": [3, 10] },
+    { "prefab": "stairs", "at": [1, 5], "next": "13" },
+    { "prefab": "flamethrower", "at": [10, 9], "dir": "up", "length": 4, "stage": 0 },
+    { "prefab": "flamethrower", "at": [7, 6], "dir": "up", "length": 5, "stage": 0 },
+    { "prefab": "flamethrower", "at": [7, 6], "dir": "down", "length": 5, "stage": 0 },
+    { "prefab": "crossbow", "at": [-1, 5], "dir": "right" }
+  ]
+}

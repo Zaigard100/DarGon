@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.03.name",
+  "dark": true,
+  "tiles": [
+    "#..#....#.",
+    ".##.####..",
+    "#.##....#.",
+    ".##.#####.",
+    "#.......#.",
+    ".#######.#",
+    ".#......##",
+    "##.####..#",
+    "...#...##.",
+    ".###.##..."
+  ],
+  "spawn": [0, 9],
+  "entities": [
+    { "prefab": "hidden_trap", "at": [5, 3] },
+    { "prefab": "hidden_trap", "at": [9, 0] },
+    { "prefab": "hidden_trap", "at": [9, 8] },
+    { "prefab": "hidden_trap", "at": [2, 0] },
+    { "prefab": "teleport", "at": [4, 9], "target": [9, 0] },
+    { "prefab": "teleport", "at": [9, 9], "target": [0, 8] },
+    { "prefab": "stairs", "at": [0, 6], "next": "04" },
+    { "prefab": "item", "at": [5, 0], "item": { "id": "coins", "count": 10 } },
+    { "prefab": "item", "at": [0, 1], "item": { "id": "potion" } }
+  ]
+}

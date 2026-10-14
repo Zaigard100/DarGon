@@ -1,0 +1,39 @@
+{
+  "$schema": "../../../assets/data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.03.name",
+  "tiles": [
+    "#############",
+    "#...#...#...#",
+    "#...........#",
+    "#...#...#...#",
+    "######.######",
+    "#####...#####",
+    "#############"
+  ],
+  "spawn": [1, 1],
+  "entities": [
+    { "prefab": "button", "at": [2, 2], "onUse": ["use \"lib/util\"", "flip('g1')", "flip('g2')"] },
+    { "prefab": "gate", "id": "g1", "at": [4, 2] },
+    {
+      "prefab": "button",
+      "id": "b3",
+      "at": [6, 2],
+      "onUse": [
+        "flip('g1')",
+        "flip('g2')",
+        "presses03 += 1",
+        "if presses03 == 3 {",
+        "    off('wall3')",
+        "    achieve('curious')",
+        "}"
+      ]
+    },
+    { "prefab": "gate", "id": "g2", "at": [8, 2], "enabled": false },
+    { "prefab": "stairs", "at": [10, 2], "next": "04" },
+    { "prefab": "tablet", "at": [1, 3], "text": "@level.03.t1" },
+    { "prefab": "fake_wall", "id": "wall3", "at": [6, 4] },
+    { "prefab": "item", "at": [6, 5], "item": { "id": "coins", "count": 30 } }
+  ],
+  "script": "03.dgs"
+}

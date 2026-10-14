@@ -1,0 +1,32 @@
+{
+  "$schema": "../../../assets/data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.07.name",
+  "tiles": [
+    "#################",
+    "#################",
+    "#...............#",
+    "#...............#",
+    "#...............#",
+    "#################",
+    "#################"
+  ],
+  "spawn": [1, 2],
+  "entities": [
+    { "prefab": "flamethrower", "id": "f0", "at": [5, 1], "dir": "down", "length": 3, "stage": 3, "period": 999.0 },
+    { "prefab": "flamethrower", "id": "f1", "at": [8, 1], "dir": "down", "length": 3, "stage": 3, "period": 999.0 },
+    { "prefab": "flamethrower", "id": "f2", "at": [11, 1], "dir": "down", "length": 3, "stage": 3, "period": 999.0 },
+    { "prefab": "flamethrower", "id": "f3", "at": [14, 1], "dir": "down", "length": 3, "stage": 3, "period": 999.0 },
+    { "prefab": "stairs", "at": [15, 3], "next": "08" },
+    { "prefab": "tablet", "at": [1, 4], "text": "@level.07.t1" },
+    { "prefab": "lamp", "at": [5, 5], "color": 0 },
+    { "prefab": "lamp", "id": "k7_0", "at": [5, 5], "color": 2, "enabled": false },
+    { "prefab": "lamp", "at": [8, 5], "color": 0 },
+    { "prefab": "lamp", "id": "k7_1", "at": [8, 5], "color": 2, "enabled": false },
+    { "prefab": "lamp", "at": [11, 5], "color": 0 },
+    { "prefab": "lamp", "id": "k7_2", "at": [11, 5], "color": 2, "enabled": false },
+    { "prefab": "lamp", "at": [14, 5], "color": 0 },
+    { "prefab": "lamp", "id": "k7_3", "at": [14, 5], "color": 2, "enabled": false }
+  ],
+  "script": "07.dgs"
+}

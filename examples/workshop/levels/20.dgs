@@ -1,0 +1,64 @@
+// Финал: всё сразу. Плиты-заряды загораются по очереди (rand), каждый удар
+// меняет фазу: арбалеты → стражи по кругу (lib/patrol) → лава.
+use "lib/events"
+use "lib/util"
+use "lib/patrol"
+
+charges20 = [[2, 2], [12, 2], [2, 8], [12, 8]]
+ring20 = [[5, 3], [6, 3], [7, 3], [8, 3], [9, 3], [9, 4], [9, 5], [9, 6], [9, 7], [8, 7], [7, 7], [6, 7], [5, 7], [5, 6], [5, 5], [5, 4]]
+lava20 = ["lava20_0", "lava20_1", "lava20_2", "lava20_3"]
+active20 = -1
+last20 = -1
+charge20 = [-1, -1]
+hits20 = 0
+timers20 = []
+
+def arm20() {
+    k = rand(4)
+    if k == last20 {
+        k = (k + 1) % 4
+    }
+    active20 = k
+    last20 = k
+    charge20 = charges20[k]
+    on("ch20_" + k)
+}
+
+def hit20() {
+    off("ch20_" + active20)
+    active20 = -1
+    charge20 = [-1, -1]
+    hits20 += 1
+    if hits20 == 1 {
+        offAll(["cb20a", "cb20b", "core20_0"])
+        onAll(["core20_1", "sen20a", "sen20b"])
+        push(timers20, circuit("sen20a", ring20, 0.34, 0))
+        push(timers20, circuit("sen20b", ring20, 0.34, 8))
+    }
+    if hits20 == 2 {
+        onAll(lava20)
+    }
+    if hits20 == 3 {
+        win20()
+    } else {
+        after(1.5, arm20)
+    }
+}
+
+def win20() {
+    for t in timers20 {
+        cancel(t)
+    }
+    offAll(["sen20a", "sen20b", "core20_1"])
+    offAll(lava20)
+    on("core20_2")
+    on("stairs20")
+}
+
+onStep(def(x, y) {
+    if active20 >= 0 && x == charge20[0] && y == charge20[1] {
+        hit20()
+    }
+})
+
+after(2.0, arm20)

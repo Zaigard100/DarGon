@@ -1,0 +1,28 @@
+{
+  "$schema": "../prefab.schema.json",
+  "id": "bushes",
+  "description": "Кусты: прямоугольник width×height, закрывающий игрока сверху.",
+  "placement": "any",
+  "params": {
+    "width": {
+      "type": "int",
+      "min": 1
+    },
+    "height": {
+      "type": "int",
+      "min": 1
+    }
+  },
+  "components": {
+    "SpriteRef": {
+      "region": "spinney"
+    },
+    "Layer": {
+      "z": "over"
+    },
+    "Area": {
+      "width": "$width",
+      "height": "$height"
+    }
+  }
+}

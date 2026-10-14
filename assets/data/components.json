@@ -1,0 +1,166 @@
+{
+  "$schema": "components.schema.json",
+  "events": ["use"],
+  "components": {
+    "SpriteRef": {
+      "description": "Картинка сущности: кадр атласа игры или текстура пака.",
+      "fields": {
+        "region": { "type": "string", "description": "Имя картинки: игровой или из textures/ пака.", "default": null },
+        "frame": { "type": "int", "default": 0, "min": 0, "description": "Кадр полосы (картинка шириной в несколько клеток)." },
+        "flipX": { "type": "bool", "default": false, "description": "Отразить по горизонтали." },
+        "angle": { "type": "number", "default": 0, "description": "Поворот в градусах для направления «вправо» (с Facing)." },
+        "offset": { "type": "point", "description": "Сдвиг картинки в пикселях, Y вниз.", "default": null }
+      }
+    },
+    "Layer": {
+      "description": "Слой рисования: под игроком или над ним.",
+      "fields": {
+        "z": { "type": "string", "values": ["floor", "over"], "description": "floor — на полу под игроком, over — над ним." }
+      }
+    },
+    "Hidden": {
+      "description": "Не рисуется (скрытая ловушка; видна с зельем зоркости).",
+      "fields": {}
+    },
+    "Blocking": {
+      "description": "Непроходимая клетка (стена из сущности: дверь, сундук, лавка).",
+      "fields": {}
+    },
+    "Facing": {
+      "description": "Направление сущности: поворачивает картинку, задаёт, куда стреляет излучатель.",
+      "fields": {
+        "dir": { "type": "direction8" }
+      }
+    },
+    "Area": {
+      "description": "Сущность занимает прямоугольник клеток (кусты, зона).",
+      "fields": {
+        "width": { "type": "int", "min": 1 },
+        "height": { "type": "int", "min": 1 }
+      }
+    },
+    "AreaEffect": {
+      "description": "Раз в period секунд действует на игрока внутри области (нужен Area).",
+      "fields": {
+        "effect": { "type": "string", "values": ["heal", "damage"], "description": "heal — лечит, damage — ранит." },
+        "period": { "type": "number", "min": 0.1, "description": "Секунды между срабатываниями." }
+      }
+    },
+    "Interactable": {
+      "description": "С сущностью можно взаимодействовать кнопкой действия.",
+      "fields": {
+        "reach": { "type": "string", "values": ["self", "adjacent"], "description": "self — стоя на клетке (лестница, кнопка), adjacent — с соседней (дверь, табличка)." }
+      }
+    },
+    "ScriptHandlers": {
+      "description": "Обработчики DGScript из уровня (onUse…); события перечисляются в events префаба.",
+      "fields": {}
+    },
+    "Container": {
+      "description": "Сундук: при использовании отдаёт предметы.",
+      "fields": {
+        "items": { "type": "items" },
+        "open": { "type": "bool", "default": false }
+      }
+    },
+    "Lock": {
+      "description": "Замок: открывается ключом с тем же key.",
+      "fields": {
+        "key": { "type": "string", "description": "Имя ключа (у ключа-предмета — поле key).", "default": null },
+        "locked": { "type": "bool", "default": true }
+      }
+    },
+    "Door": {
+      "description": "Дверь: закрытая непроходима, открытая не рисуется (вместе с Lock и Blocking).",
+      "fields": {
+        "open": { "type": "bool", "default": false }
+      }
+    },
+    "Emitter": {
+      "description": "Стреляет стрелами (arrow) или выпускает пламя (fire) по направлению dir.",
+      "fields": {
+        "kind": { "type": "string", "values": ["arrow", "fire"] },
+        "dir": { "type": "direction8" },
+        "period": { "type": "number", "min": 0.1, "description": "Секунды между выстрелами или шагами пламени." },
+        "maxLength": { "type": "int", "default": 0, "min": 0, "description": "Пламя: наибольшая длина в клетках." },
+        "stage": { "type": "int", "default": 0, "min": 0, "description": "Пламя: длина в начале." }
+      }
+    },
+    "Fragile": {
+      "description": "Хрупкий пол: трескается, пока на нём стоят; разрушенный — игрок падает (с Hazard whenBroken).",
+      "fields": {
+        "cracks": { "type": "int", "default": 0, "min": 0 },
+        "maxCracks": { "type": "int", "min": 1 },
+        "delay": { "type": "number", "min": 0.05, "description": "Секунды на одну трещину." }
+      }
+    },
+    "Hazard": {
+      "description": "Опасная клетка: ранит игрока, который на ней стоит.",
+      "fields": {
+        "damage": { "type": "damage", "description": "Число, диапазон [min, max] или \"kill\" — смерть сразу." },
+        "kind": { "type": "string", "description": "Вид урона (картинка смерти, достижения): trap, spikes, fire, fall, zone…" },
+        "shieldable": { "type": "bool", "default": false, "description": "Щит принимает часть урона." },
+        "once": { "type": "bool", "default": false, "description": "Срабатывает один раз и исчезает." },
+        "whenBroken": { "type": "bool", "default": false, "description": "Действует только когда хрупкий пол разрушен." }
+      }
+    },
+    "Pickup": {
+      "description": "Предмет на полу: подбирается, когда игрок на нём стоит.",
+      "fields": {
+        "item": { "type": "item" }
+      }
+    },
+    "ChaseAI": {
+      "description": "Преследует игрока: замечает в радиусе radius и идёт к нему путём не длиннее depth.",
+      "fields": {
+        "radius": { "type": "int", "min": 1 },
+        "depth": { "type": "int", "min": 1 },
+        "speed": { "type": "number", "default": 1, "min": 0.1 }
+      }
+    },
+    "ExplodeOnContact": {
+      "description": "Взрывается при касании игрока (камикадзе).",
+      "fields": {
+        "damage": { "type": "damage" }
+      }
+    },
+    "ShopStock": {
+      "description": "Лавка: товары с ценой и запасом (с Interactable).",
+      "fields": {
+        "offers": { "type": "offers" }
+      }
+    },
+    "AimAtPlayer": {
+      "description": "Поворачивается к игроку в пределах range (арбалет с наведением, вместе с Facing и Emitter).",
+      "fields": {
+        "range": { "type": "int", "min": 1 },
+        "diagonal": { "type": "bool", "default": false, "description": "Стрелять и по диагонали." }
+      }
+    },
+    "TriggeredCycle": {
+      "description": "Шипы: наступили — через delay секунд срабатывают, потом прячутся.",
+      "fields": {
+        "active": { "type": "bool", "default": false },
+        "delay": { "type": "number", "min": 0.05 }
+      }
+    },
+    "LevelExit": {
+      "description": "Выход на другой уровень (с Interactable reach self).",
+      "fields": {
+        "next": { "type": "level", "description": "Куда ведёт; не задан — конец игры.", "default": null }
+      }
+    },
+    "Text": {
+      "description": "Текст для игрока (табличка, с Interactable).",
+      "fields": {
+        "text": { "type": "text" }
+      }
+    },
+    "Teleporter": {
+      "description": "Переносит игрока в клетку target (с Interactable reach self).",
+      "fields": {
+        "target": { "type": "point" }
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "../prefab.schema.json",
+  "id": "teleport",
+  "description": "Телепорт: встать и нажать «использовать» — игрок переносится в target.",
+  "params": {
+    "target": {
+      "type": "point",
+      "description": "Клетка назначения."
+    }
+  },
+  "components": {
+    "SpriteRef": {
+      "region": "teleporter"
+    },
+    "Layer": {
+      "z": "floor"
+    },
+    "Interactable": {
+      "reach": "self"
+    },
+    "Teleporter": {
+      "target": "$target"
+    }
+  }
+}

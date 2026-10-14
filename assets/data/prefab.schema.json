@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prefab.schema.json",
+  "title": "DarGon: префаб",
+  "description": "Шаблон сущности. Строка \"$имя\" в данных компонента заменяется значением параметра.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "components"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$", "description": "Совпадает с именем файла." },
+    "description": { "type": "string" },
+    "placement": {
+      "enum": ["floor", "wall", "any"],
+      "default": "floor",
+      "description": "floor — на полу; wall — на стене или за краем карты; any — без проверки."
+    },
+    "events": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z][a-zA-Z]*$" },
+      "uniqueItems": true,
+      "description": "События для обработчиков DGScript: use → onUse."
+    },
+    "params": {
+      "type": "object",
+      "propertyNames": { "pattern": "^[a-z][a-zA-Z0-9]*$" },
+      "additionalProperties": { "$ref": "param.schema.json" }
+    },
+    "components": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": { "pattern": "^[A-Z][A-Za-z0-9]*$" },
+      "additionalProperties": { "type": "object" }
+    }
+  }
+}

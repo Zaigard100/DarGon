@@ -1,0 +1,38 @@
+{
+  "$schema": "../../../data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.10.name",
+  "dark": true,
+  "checkpoint": true,
+  "tiles": [
+    "#..###........##",
+    ".##.#.#######.##",
+    ".##.#......##.##",
+    "##.#########.#.#",
+    "##..###.....##..",
+    "#.##.#.#######.#",
+    "#.##.#...#...#..",
+    "##.######..#.###",
+    "#..##..######..#",
+    ".##.###.#######.",
+    ".##..##..##..##.",
+    "#..##..##.#.#..#",
+    ".########..#####"
+  ],
+  "spawn": [4, 6],
+  "entities": [
+    { "prefab": "stairs", "at": [15, 6], "next": "11" },
+    { "prefab": "stairs", "at": [15, 4], "next": "shops/shop_10" },
+    { "prefab": "item", "at": [9, 2], "item": { "id": "torch" } },
+    { "prefab": "item", "at": [5, 8], "item": { "id": "coins", "count": 40 } },
+    { "prefab": "item", "at": [10, 2], "item": { "id": "coins", "count": 10 } },
+    { "prefab": "item", "at": [8, 2], "item": { "id": "shield" } },
+    { "prefab": "item", "at": [7, 2], "item": { "id": "potion" } },
+    { "prefab": "flamethrower", "at": [7, 7], "dir": "right", "length": 5, "stage": 3 },
+    { "prefab": "flamethrower", "at": [7, 7], "dir": "up", "length": 5, "stage": 3 },
+    { "prefab": "flamethrower", "at": [7, 7], "dir": "left", "length": 5, "stage": 3 },
+    { "prefab": "flamethrower", "at": [7, 7], "dir": "down", "length": 5, "stage": 3 },
+    { "prefab": "crossbow", "at": [15, 12], "dir": "up_left" },
+    { "prefab": "tablet", "at": [15, 5], "text": "@level.10.tablet1" }
+  ]
+}

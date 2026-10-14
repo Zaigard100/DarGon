@@ -1,0 +1,29 @@
+{
+  "$schema": "../../../assets/data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.02.name",
+  "tiles": [
+    "#################",
+    "#...#.....#.....#",
+    "#...............#",
+    "#...#.....#.....#",
+    "#################"
+  ],
+  "spawn": [1, 1],
+  "entities": [
+    { "prefab": "tablet", "at": [3, 1], "text": "@level.02.t1" },
+    { "prefab": "door", "at": [4, 2], "key": "red" },
+    { "prefab": "item", "at": [7, 2], "item": { "id": "key", "key": "blue", "color": "#4870E8" } },
+    { "prefab": "door", "at": [10, 2], "key": "blue" },
+    { "prefab": "stairs", "at": [13, 2], "next": "03" },
+    { "prefab": "item", "at": [2, 3], "item": { "id": "key", "key": "red", "color": "#E04848" } },
+    { "prefab": "item", "at": [7, 3], "item": { "id": "key", "key": "gold", "color": "#F0C838" } },
+    {
+      "prefab": "chest",
+      "at": [12, 3],
+      "locked": true,
+      "key": "gold",
+      "items": [{ "id": "coins", "count": 25 }, { "id": "shield" }]
+    }
+  ]
+}

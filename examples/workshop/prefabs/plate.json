@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../assets/data/prefab.schema.json",
+  "id": "plate",
+  "description": "Нажимная плита (украшение): срабатывание — в скрипте, хук step(x, y).",
+  "params": {
+    "color": {
+      "type": "int",
+      "default": 0,
+      "min": 0,
+      "max": 8,
+      "description": "0 — серая, 1–4 — красная, зелёная, синяя, жёлтая; 5–8 — то же, нажатая."
+    }
+  },
+  "components": { "SpriteRef": { "region": "plate", "frame": "$color" }, "Layer": { "z": "floor" } }
+}

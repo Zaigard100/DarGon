@@ -1,0 +1,8 @@
+// Первый уровень: самый простой скрипт — таймер every().
+use "lib/util"
+
+off("lampB")
+every(0.7, def() {
+    flip("lampA")
+    flip("lampB")
+})

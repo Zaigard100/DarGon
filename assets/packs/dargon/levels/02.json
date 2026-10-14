@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.02.name",
+  "dark": true,
+  "tiles": [
+    "##........",
+    "#..#######",
+    ".##...##..",
+    "####.#...#",
+    "...#.#####",
+    ".###..##.#",
+    ".##.##.##.",
+    "...##.##.#",
+    "####.##.##",
+    "####...#.#"
+  ],
+  "spawn": [0, 2],
+  "entities": [
+    { "prefab": "hidden_trap", "at": [2, 4] },
+    { "prefab": "hidden_trap", "at": [9, 0] },
+    { "prefab": "hidden_trap", "at": [8, 5] },
+    { "prefab": "hidden_trap", "at": [9, 2] },
+    { "prefab": "stairs", "at": [8, 9], "next": "03" }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "../prefab.schema.json",
+  "id": "stairs",
+  "description": "Лестница на следующий уровень. Встать на неё и нажать «использовать».",
+  "params": {
+    "next": {
+      "type": "level",
+      "default": null,
+      "description": "Куда ведёт; null — конец игры."
+    },
+    "flip": {
+      "type": "bool",
+      "default": false,
+      "description": "Отразить спрайт по горизонтали."
+    }
+  },
+  "components": {
+    "SpriteRef": {
+      "region": "nextlevel",
+      "flipX": "$flip"
+    },
+    "Layer": {
+      "z": "floor"
+    },
+    "Interactable": {
+      "reach": "self"
+    },
+    "LevelExit": {
+      "next": "$next"
+    }
+  }
+}

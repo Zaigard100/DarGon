@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "components.schema.json",
+  "title": "DarGon: компоненты префабов",
+  "description": "Из каких компонентов собираются префабы и какие у них поля (типы — как у параметров префаба).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["components"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "events": { "type": "array", "items": { "type": "string" }, "description": "События для обработчиков DGScript." },
+    "components": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "description": { "type": "string" },
+          "fields": { "type": "object", "additionalProperties": { "$ref": "param.schema.json" } }
+        }
+      }
+    }
+  }
+}

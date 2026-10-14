@@ -1,0 +1,29 @@
+// Мост: шаг на клетку пути открывает следующую и обрушивает ту, что за спиной.
+use "lib/events"
+use "lib/util"
+
+path11 = [[3, 4], [4, 4], [4, 3], [4, 2], [5, 2], [6, 2], [6, 3], [6, 4], [6, 5], [6, 6], [7, 6], [8, 6], [8, 5], [8, 4], [8, 3], [8, 2], [9, 2], [10, 2], [10, 3], [10, 4], [11, 4]]
+
+def reveal11(k) {
+    setTile(path11[k][0], path11[k][1], "floor")
+}
+
+def collapse11(k) {
+    // Под героем не рушим (px, py — из lib/events).
+    if px != path11[k][0] || py != path11[k][1] {
+        setTile(path11[k][0], path11[k][1], "wall")
+    }
+}
+
+onStep(def(x, y) {
+    for k = 0, k < len(path11), k += 1 {
+        if path11[k][0] == x && path11[k][1] == y {
+            if k + 1 < len(path11) {
+                later(0.15, reveal11, k + 1)
+            }
+            if k >= 2 {
+                later(0.3, collapse11, k - 2)
+            }
+        }
+    }
+})

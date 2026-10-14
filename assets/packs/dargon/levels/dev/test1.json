@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../../data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.dev.test1.name",
+  "tiles": [
+    "....#",
+    ".....",
+    ".....",
+    "..#..",
+    "....."
+  ],
+  "spawn": [2, 2],
+  "entities": [
+    { "prefab": "hidden_trap", "at": [3, 1] },
+    { "prefab": "hidden_trap", "at": [3, 4] },
+    { "prefab": "teleport", "at": [2, 1], "target": [1, 4] },
+    { "prefab": "teleport", "at": [2, 4], "target": [0, 3] },
+    { "prefab": "stairs", "id": "Stair1", "at": [1, 2], "enabled": false },
+    { "prefab": "stairs", "id": "Stair2", "at": [1, 1], "enabled": false, "next": "dev/test2" },
+    { "prefab": "item", "at": [0, 1], "item": { "id": "key", "key": "key1", "color": "#FF0000" } },
+    { "prefab": "fragile_floor", "at": [0, 2], "cracks": 2 },
+    { "prefab": "flamethrower", "at": [-1, 0], "dir": "right", "length": 3, "stage": 1, "period": 0.5 },
+    { "prefab": "flamethrower", "at": [4, 5], "dir": "up", "length": 2, "stage": 1, "period": 4.0 },
+    { "prefab": "crossbow", "at": [5, 3], "dir": "up_left" },
+    { "prefab": "bushes", "at": [3, 1], "width": 2, "height": 2 },
+    { "prefab": "spikes", "at": [3, 4] },
+    { "prefab": "spikes", "at": [3, 3] },
+    {
+      "prefab": "button",
+      "id": "A",
+      "at": [0, 4],
+      "onUse": ["entity('Stair1').enable()", "entity('Stair2').enable()", "self.disable()", "entity('B').enable()"]
+    },
+    {
+      "prefab": "button",
+      "id": "B",
+      "at": [1, 4],
+      "enabled": false,
+      "onUse": [
+        "entity('Stair1').moveTo(1, 3)",
+        "entity('Stair1').enable()",
+        "entity('Stair2').moveTo(1, 2)",
+        "entity('Stair2').enable()",
+        "entity('C').enable()",
+        "self.disable()"
+      ]
+    },
+    { "prefab": "button", "id": "C", "at": [0, 4], "enabled": false, "onUse": "self.disable()" },
+    { "prefab": "door", "at": [2, 4], "key": "key1" },
+    { "prefab": "tablet", "at": [1, 5], "text": "@level.dev.test1.tablet1" },
+    { "prefab": "chest", "at": [4, 0], "items": [{ "id": "torch", "count": 9 }, { "id": "trap_sight", "count": 9 }] }
+  ]
+}

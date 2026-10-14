@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.19.name",
+  "dark": true,
+  "tiles": [
+    "#######",
+    "##..#.#",
+    "#.#..##",
+    "#.##.##",
+    "##.#.##",
+    "#..#..#",
+    "#######"
+  ],
+  "spawn": [1, 5],
+  "entities": [
+    { "prefab": "stairs", "at": [5, 5], "next": "20" },
+    { "prefab": "flamethrower", "at": [3, 4], "dir": "right", "length": 1, "stage": 1, "period": 4.0 },
+    { "prefab": "flamethrower", "at": [3, 4], "dir": "left", "length": 1, "stage": 1, "period": 4.0 },
+    { "prefab": "flamethrower", "at": [3, 4], "dir": "up", "length": 2, "stage": 1, "period": 4.0 },
+    { "prefab": "crossbow", "at": [7, 1], "dir": "left" },
+    { "prefab": "spikes", "at": [2, 5] },
+    { "prefab": "spikes", "at": [2, 4] },
+    { "prefab": "spikes", "at": [2, 1] },
+    { "prefab": "spikes", "at": [3, 1] },
+    { "prefab": "spikes", "at": [4, 2] },
+    { "prefab": "spikes", "at": [4, 3] },
+    { "prefab": "spikes", "at": [4, 4] },
+    { "prefab": "spikes", "at": [4, 5] }
+  ]
+}

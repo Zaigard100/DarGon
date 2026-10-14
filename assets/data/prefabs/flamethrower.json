@@ -1,0 +1,47 @@
+{
+  "$schema": "../prefab.schema.json",
+  "id": "flamethrower",
+  "description": "Огнемёт: пламя по линии dir растёт на клетку каждые period секунд до length, затем гаснет.",
+  "placement": "wall",
+  "params": {
+    "dir": {
+      "type": "direction",
+      "default": "right"
+    },
+    "length": {
+      "type": "int",
+      "default": 3,
+      "min": 0,
+      "description": "Максимальная длина пламени."
+    },
+    "stage": {
+      "type": "int",
+      "default": 0,
+      "min": 0,
+      "description": "Длина пламени в начале."
+    },
+    "period": {
+      "type": "number",
+      "default": 2.0,
+      "min": 0.1
+    }
+  },
+  "components": {
+    "SpriteRef": {
+      "region": "flamethrower"
+    },
+    "Layer": {
+      "z": "over"
+    },
+    "Facing": {
+      "dir": "$dir"
+    },
+    "Emitter": {
+      "kind": "fire",
+      "dir": "$dir",
+      "maxLength": "$length",
+      "stage": "$stage",
+      "period": "$period"
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "../prefab.schema.json",
+  "id": "chest",
+  "description": "Сундук: открывается с соседней клетки, отдаёт предметы.",
+  "placement": "any",
+  "params": {
+    "items": {
+      "type": "items",
+      "default": []
+    },
+    "locked": {
+      "type": "bool",
+      "default": false
+    },
+    "key": {
+      "type": "string",
+      "default": null
+    },
+    "open": {
+      "type": "bool",
+      "default": false
+    }
+  },
+  "components": {
+    "SpriteRef": {
+      "region": "chest"
+    },
+    "Layer": {
+      "z": "floor"
+    },
+    "Interactable": {
+      "reach": "adjacent"
+    },
+    "Container": {
+      "items": "$items",
+      "open": "$open"
+    },
+    "Lock": {
+      "key": "$key",
+      "locked": "$locked"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "../../../data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.20.name",
+  "dark": true,
+  "checkpoint": true,
+  "tiles": [
+    "###############",
+    "##...###.....##",
+    "#.###.#.#######",
+    "#.####..##..###",
+    "#######..#..###",
+    "##.####..#..###",
+    "#.#####.##.####",
+    "##...###.######",
+    "#####.#.#..####",
+    "####.######.###",
+    "#.###.##..##.##",
+    "#.####..##..###",
+    "###############"
+  ],
+  "spawn": [12, 1],
+  "entities": [
+    { "prefab": "hidden_trap", "at": [1, 3] },
+    { "prefab": "teleport", "at": [9, 10], "target": [1, 11] },
+    { "prefab": "stairs", "at": [11, 5], "next": "21" },
+    { "prefab": "stairs", "at": [11, 3], "next": "shops/shop_20" },
+    { "prefab": "item", "at": [1, 3], "item": { "id": "coins", "count": 20 } },
+    { "prefab": "flamethrower", "at": [7, 8], "dir": "right", "length": 3, "stage": 1, "period": 4.0 },
+    { "prefab": "flamethrower", "at": [7, 8], "dir": "left", "length": 3, "stage": 1, "period": 4.0 },
+    { "prefab": "flamethrower", "at": [7, 8], "dir": "down", "length": 3, "stage": 1, "period": 4.0 },
+    { "prefab": "crossbow", "at": [16, 1], "dir": "left" },
+    {
+      "prefab": "button",
+      "at": [2, 5],
+      "onUse": ["setTile(9, 3, 'wall')", "setTile(9, 4, 'floor')", "setTile(9, 5, 'floor')", "setTile(9, 6, 'wall')"]
+    },
+    { "prefab": "tablet", "at": [12, 3], "text": "@level.20.tablet1" }
+  ]
+}

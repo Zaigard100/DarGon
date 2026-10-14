@@ -1,0 +1,66 @@
+{
+  "$schema": "items.schema.json",
+  "items": {
+    "coins": {
+      "icon": "money",
+      "effect": "coins",
+      "maxStack": 9999,
+      "description": "Монеты. При подборе сразу попадают в кошелёк, в инвентаре не лежат."
+    },
+    "potion": {
+      "icon": "hp_potion",
+      "effect": "heal",
+      "args": { "amount": 15 }
+    },
+    "shield": {
+      "icon": "sheld",
+      "effect": "shield"
+    },
+    "torch": {
+      "icon": "torch_spritesheet",
+      "effect": "light",
+      "description": "Освещает тёмный уровень до конца уровня."
+    },
+    "trap_sight": {
+      "icon": "show_trap_potion",
+      "effect": "trap_sight",
+      "description": "Показывает скрытые ловушки."
+    },
+    "speed_potion": {
+      "icon": "speed_potion",
+      "effect": "speed",
+      "fields": {
+        "power": { "type": "number", "min": 1, "description": "Множитель скорости." }
+      }
+    },
+    "slow_potion": {
+      "icon": "slowdown_potion",
+      "effect": "slow",
+      "fields": {
+        "power": { "type": "number", "min": 1, "description": "Во сколько раз замедляет." }
+      }
+    },
+    "key": {
+      "icon": "key",
+      "effect": "key",
+      "maxStack": 1,
+      "fields": {
+        "key": { "type": "string", "description": "Открывает двери и сундуки с таким же key." },
+        "color": { "type": "color", "default": "#FFFFFF", "description": "Цвет ключа." }
+      }
+    },
+    "egg": {
+      "icon": "cube",
+      "effect": "egg",
+      "maxStack": 1,
+      "args": { "icons": { "4601025111298": "cube", "jokkeer_lovushcera": "turn_off", "inf": "sinf" } },
+      "fields": {
+        "code": {
+          "type": "string",
+          "values": ["4601025111298", "jokkeer_lovushcera", "inf"],
+          "description": "Какая пасхалка срабатывает при использовании."
+        }
+      }
+    }
+  }
+}

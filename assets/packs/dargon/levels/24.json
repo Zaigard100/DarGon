@@ -1,0 +1,45 @@
+{
+  "$schema": "../../../data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.24.name",
+  "tiles": [
+    "##############",
+    "###########.##",
+    "###........#.#",
+    "##.#########.#",
+    "#.###.....##.#",
+    "####.#######.#",
+    "###..##......#",
+    "##.#.######.##",
+    "#.##.#..###.##",
+    "#.##.###.##.##",
+    "##.##...###.##",
+    "####..###..###",
+    "##############"
+  ],
+  "spawn": [2, 10],
+  "entities": [
+    { "prefab": "item", "at": [6, 8], "item": { "id": "coins", "count": 10 } },
+    { "prefab": "teleport", "at": [4, 11], "target": [9, 11] },
+    { "prefab": "stairs", "at": [1, 4], "next": "25" },
+    { "prefab": "item", "id": "I1", "at": [8, 6], "enabled": false, "item": { "id": "potion" } },
+    { "prefab": "item", "id": "I2", "at": [9, 6], "enabled": false, "item": { "id": "shield" } },
+    { "prefab": "item", "id": "I3", "at": [10, 6], "enabled": false, "item": { "id": "torch" } },
+    { "prefab": "fragile_floor", "id": "F1", "at": [8, 4], "enabled": false, "cracks": 3 },
+    {
+      "prefab": "button",
+      "id": "A",
+      "at": [9, 4],
+      "onUse": ["entity('Tab1').enable()", "entity('F1').enable()", "self.remove()"]
+    },
+    {
+      "prefab": "button",
+      "id": "B",
+      "at": [7, 6],
+      "onUse": ["entity('I1').enable()", "entity('I2').enable()", "entity('I3').enable()", "self.remove()"]
+    },
+    { "prefab": "tablet", "id": "Tab1", "at": [10, 4], "enabled": false, "text": "@level.24.tablet1" },
+    { "prefab": "tablet", "at": [5, 6], "text": "@level.24.tablet2" },
+    { "prefab": "tablet", "at": [11, 5], "text": "@level.24.tablet3" }
+  ]
+}

@@ -1,0 +1,19 @@
+// Лабиринт строится при входе на уровень: lib/maze, случайный каждый раз.
+use "lib/maze"
+use "lib/events"
+
+maze(1, 1, 15, 11)
+
+time17 = 0
+done17 = false
+onLoop(def(dt) {
+    time17 += dt
+})
+onStep(def(x, y) {
+    if x == 15 && y == 11 && !done17 {
+        done17 = true
+        if time17 < 30 {
+            achieve("maze_runner")
+        }
+    }
+})

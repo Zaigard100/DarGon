@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pack.schema.json",
+  "title": "DarGon: пак уровней",
+  "description": "Пак: метаданные, совместимость, уровни, стартовые наборы по режимам, достижения. Лежит в корне пака рядом с levels/, i18n/ и иконкой; пак — папка или zip-архив .dgpack.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "id", "name", "start", "levels"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "format": { "const": 1, "description": "Версия формата пака." },
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$", "description": "Уникальный id: по нему отделяются сохранения и достижения." },
+    "name": { "type": "string", "description": "Ключ локализации \"@pack.<id>.name\" или строка." },
+    "description": { "type": "string", "description": "Ключ локализации или строка." },
+    "author": { "type": "string" },
+    "version": { "type": "string", "description": "Версия самого пака." },
+    "game": { "type": "string", "pattern": "^[0-9]+(\\.[0-9]+)*$", "description": "Минимальная версия игры, например \"4.0.0\"." },
+    "icon": { "type": "string", "description": "Картинка PNG в паке, например \"icon.png\"." },
+    "start": { "type": "string", "description": "Первый уровень новой игры." },
+    "levels": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[A-Za-z0-9_]+(/[A-Za-z0-9_]+)*$" },
+      "description": "Файлы levels/<id>.json; список нужен, потому что на Android каталоги нельзя перечислить."
+    },
+    "prefabs": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+      "description": "Свои префабы пака: prefabs/<id>.json (формат как у префабов игры, компоненты — из data/components.json)."
+    },
+    "textures": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[A-Za-z0-9_]+$" },
+      "description": "Свои картинки: textures/<имя>.png. Имя игровой картинки заменяет её, пока выбран пак."
+    },
+    "modes": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "casual": { "$ref": "#/$defs/mode" },
+        "normal": { "$ref": "#/$defs/mode" },
+        "hardcore": { "$ref": "#/$defs/mode" }
+      }
+    },
+    "achievements": { "type": "array", "items": { "$ref": "#/$defs/achievement" } }
+  },
+  "$defs": {
+    "stack": {
+      "type": "object",
+      "required": ["id"],
+      "properties": { "id": { "type": "string" }, "count": { "type": "integer", "minimum": 1 } }
+    },
+    "mode": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": { "start": { "type": "array", "items": { "$ref": "#/$defs/stack" }, "description": "Стартовый набор." } }
+    },
+    "names": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "achievement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "description", "when"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "difficulty": { "enum": ["easy", "medium", "hard", "hardcore"] },
+        "hidden": { "type": "boolean", "description": "Название скрыто, пока не получено." },
+        "when": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type"],
+          "properties": {
+            "type": { "enum": ["level", "game", "count", "death", "script"], "description": "level — пройти уровень (без level — любой); game — пройти игру с начала; count — счётчик за всё время; death — погибнуть от kind; script — achieve('id') из скрипта." },
+            "level": { "type": "string" },
+            "since": { "type": "string", "description": "Отрезок уровней since..level за одно прохождение." },
+            "without": { "type": "array", "items": { "enum": ["damage", "potion", "torch", "trapSight", "shieldBreak", "purchase", "death"] } },
+            "modes": { "type": "array", "items": { "enum": ["casual", "normal", "hardcore"] }, "description": "По умолчанию — любой, кроме казуала." },
+            "maxTime": { "type": "number", "minimum": 0 },
+            "maxDeaths": { "type": "integer", "minimum": 0 },
+            "counter": { "enum": ["deaths", "coins", "purchases", "levels"] },
+            "atLeast": { "type": "integer", "minimum": 1 },
+            "kind": { "type": "string" }
+          }
+        },
+        "reward": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "unlockStart": { "type": "string", "description": "Открыть старт новой игры с этого уровня." },
+            "startItem": { "$ref": "#/$defs/stack", "description": "Предмет в стартовом наборе." },
+            "modes": { "type": "array", "items": { "enum": ["casual", "normal", "hardcore"] } }
+          }
+        }
+      }
+    }
+  }
+}

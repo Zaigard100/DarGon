@@ -1,0 +1,38 @@
+{
+  "$schema": "../prefab.schema.json",
+  "id": "kamikaze",
+  "description": "Камикадзе: замечает игрока в пределах radius, идёт к нему путём не длиннее depth шагов и взрывается при касании (17–23 урона, щит принимает часть).",
+  "params": {
+    "radius": {
+      "type": "int",
+      "min": 1
+    },
+    "depth": {
+      "type": "int",
+      "default": 15,
+      "min": 1,
+      "description": "Максимальная длина пути к игроку в шагах; дальше камикадзе дорогу не находит."
+    },
+    "speed": {
+      "type": "number",
+      "default": 0.8,
+      "min": 0.1
+    }
+  },
+  "components": {
+    "SpriteRef": {
+      "region": "spikedhero"
+    },
+    "Layer": {
+      "z": "over"
+    },
+    "ChaseAI": {
+      "radius": "$radius",
+      "depth": "$depth",
+      "speed": "$speed"
+    },
+    "ExplodeOnContact": {
+      "damage": [17, 23]
+    }
+  }
+}

@@ -1,0 +1,12 @@
+Музыка / Music — все треки CC0 (https://creativecommons.org/publicdomain/zero/1.0/)
+
+menu.ogg          "Sirens in Darkness" — The Cynic Project / pixelsphere.org / cynicmusic.com
+                  https://opengameart.org/content/sirens-in-darkness
+level_dungeon.ogg "Dungeon Ambience" — yd
+                  https://opengameart.org/content/dungeon-ambience
+level_cavern.ogg  "Dark Cavern Ambient" (002) — Paul Wortmann
+                  https://opengameart.org/content/dark-cavern-ambient
+level_drips.ogg   "Loopable Dungeon Ambience" — JaggedStone
+                  https://opengameart.org/content/loopable-dungeon-ambience
+
+Треки перекодированы в Ogg Vorbis.

@@ -1,0 +1,53 @@
+// Плиты срабатывают, когда на них наступают: хук step(x, y) из lib/events.
+use "lib/events"
+use "lib/util"
+
+// [x, y, id]: наступил — плита «нажата» (вторая картинка поверх первой).
+plates04 = [[2, 2, "p1"], [4, 3, "p2"], [2, 4, "p3"]]
+pressed04 = 0
+bridge04 = false
+
+def press04(p) {
+    off(p[2])
+    on(p[2] + "on")
+    pressed04 += 1
+    if pressed04 == len(plates04) {
+        off("gate4")
+        onAll(["ok4a", "ok4b"])
+    }
+}
+
+// Красная плита — ловушка: всё сначала.
+def reset04() {
+    for p in plates04 {
+        on(p[2])
+        off(p[2] + "on")
+    }
+    pressed04 = 0
+    on("gate4")
+    offAll(["ok4a", "ok4b"])
+}
+
+def bridgeTile04(row) {
+    setTile(14, row, "floor")
+}
+
+onStep(def(x, y) {
+    for p in plates04 {
+        if p[0] == x && p[1] == y && entity(p[2]).enabled {
+            press04(p)
+        }
+    }
+    if x == 5 && y == 5 {
+        reset04()
+    }
+    if x == 8 && y == 2 && !bridge04 {
+        bridge04 = true
+        off("x4")
+        on("x4on")
+        // Мост появляется по клетке: три отложенных вызова.
+        for k = 0, k < 3, k += 1 {
+            later(0.4 * (k + 1), bridgeTile04, 6 + k)
+        }
+    }
+})

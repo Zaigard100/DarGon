@@ -1,0 +1,26 @@
+{
+  "$schema": "../prefab.schema.json",
+  "id": "tablet",
+  "description": "Табличка с текстом. Читается с соседней клетки.",
+  "placement": "any",
+  "params": {
+    "text": {
+      "type": "text",
+      "description": "Ключ локализации \"@level.05.tablet1\"."
+    }
+  },
+  "components": {
+    "SpriteRef": {
+      "region": "tablet"
+    },
+    "Layer": {
+      "z": "floor"
+    },
+    "Interactable": {
+      "reach": "adjacent"
+    },
+    "Text": {
+      "text": "$text"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../assets/data/prefab.schema.json",
+  "id": "crystal",
+  "description": "Кристалл: украшение; собирается скриптом, когда на него наступают.",
+  "components": { "SpriteRef": { "region": "crystal" }, "Layer": { "z": "floor" } }
+}

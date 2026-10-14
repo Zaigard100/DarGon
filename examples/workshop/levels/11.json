@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../assets/data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.11.name",
+  "tiles": [
+    "###############",
+    "###############",
+    "###############",
+    "#..#########..#",
+    "#...##.#####..#",
+    "#..###.#####..#",
+    "###############",
+    "###############",
+    "###############"
+  ],
+  "spawn": [1, 4],
+  "entities": [
+    { "prefab": "stairs", "at": [13, 4], "next": "12" },
+    { "prefab": "tablet", "at": [1, 5], "text": "@level.11.t1" },
+    { "prefab": "fragile_floor", "at": [6, 4], "period": 0.5 },
+    { "prefab": "fragile_floor", "at": [6, 5], "period": 0.5 }
+  ],
+  "script": "11.dgs"
+}

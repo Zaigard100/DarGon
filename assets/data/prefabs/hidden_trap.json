@@ -1,0 +1,14 @@
+{
+  "$schema": "../prefab.schema.json",
+  "id": "hidden_trap",
+  "description": "Скрытая ловушка: 8–12 урона (щит принимает часть), срабатывает один раз и исчезает.",
+  "components": {
+    "Hidden": {},
+    "Hazard": {
+      "damage": [8, 12],
+      "shieldable": true,
+      "kind": "trap",
+      "once": true
+    }
+  }
+}

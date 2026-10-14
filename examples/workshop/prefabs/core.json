@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../assets/data/prefab.schema.json",
+  "id": "core",
+  "description": "Сердце механизма: 0 — целое, 1 — треснувшее, 2 — погасшее. Непроходимо.",
+  "placement": "any",
+  "params": { "state": { "type": "int", "default": 0, "min": 0, "max": 2, "description": "Состояние." } },
+  "components": { "SpriteRef": { "region": "core", "frame": "$state" }, "Layer": { "z": "over" }, "Blocking": {} }
+}

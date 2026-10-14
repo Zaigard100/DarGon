@@ -1,0 +1,42 @@
+{
+  "$schema": "../../../assets/data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.09.name",
+  "tiles": [
+    "#############",
+    "#.....#.....#",
+    "#...........#",
+    "#.....#.....#",
+    "#.....#######",
+    "#...........#",
+    "#...........#",
+    "#############"
+  ],
+  "spawn": [1, 1],
+  "entities": [
+    {
+      "prefab": "shop",
+      "at": [3, 2],
+      "offers": [
+        { "item": { "id": "potion" }, "price": 10, "stock": 3 },
+        { "item": { "id": "shield" }, "price": 15, "stock": 2 },
+        { "item": { "id": "trap_sight" }, "price": 12 },
+        { "item": { "id": "speed_potion", "power": 2 }, "price": 8 },
+        { "item": { "id": "slow_potion", "power": 2 }, "price": 8 }
+      ]
+    },
+    { "prefab": "fake_wall", "id": "wall9", "at": [6, 2] },
+    { "prefab": "chest", "at": [9, 2], "items": [{ "id": "egg", "code": "inf" }, { "id": "coins", "count": 40 }] },
+    { "prefab": "zone", "at": [2, 4], "width": 3, "height": 2, "effect": "heal", "period": 0.5 },
+    {
+      "prefab": "lever",
+      "id": "lever9",
+      "at": [8, 4],
+      "state": 0,
+      "onUse": ["use \"lib/util\"", "off('wall9')", "off('lever9')", "on('lever9on')", "achieve('secret_room')"]
+    },
+    { "prefab": "lever", "id": "lever9on", "at": [8, 4], "state": 1, "enabled": false },
+    { "prefab": "tablet", "at": [3, 6], "text": "@level.09.t1" },
+    { "prefab": "stairs", "at": [11, 6], "next": "10" }
+  ]
+}

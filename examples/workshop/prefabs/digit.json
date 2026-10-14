@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../assets/data/prefab.schema.json",
+  "id": "digit",
+  "description": "Клетка сапёра: 0 — открытая пустая, 1–8 — число мин рядом.",
+  "placement": "any",
+  "params": { "n": { "type": "int", "default": 0, "min": 0, "max": 8, "description": "Число." } },
+  "components": { "SpriteRef": { "region": "digit", "frame": "$n" }, "Layer": { "z": "floor" } }
+}

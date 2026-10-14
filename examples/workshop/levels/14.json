@@ -1,0 +1,43 @@
+{
+  "$schema": "../../../assets/data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.14.name",
+  "tiles": [
+    "###################",
+    "###################",
+    "#...#.............#",
+    "#...#.............#",
+    "#.................#",
+    "#...#.............#",
+    "#####.............#",
+    "#####.............#",
+    "###################"
+  ],
+  "spawn": [1, 2],
+  "entities": [
+    { "prefab": "crossbow", "id": "cb14_0", "at": [9, 1], "dir": "down", "period": 1.4 },
+    { "prefab": "crossbow", "id": "cb14_1", "at": [13, 1], "dir": "down", "period": 1.1 },
+    { "prefab": "bushes", "at": [8, 4], "width": 5, "height": 1 },
+    {
+      "prefab": "lever",
+      "id": "lever14",
+      "at": [2, 6],
+      "state": 0,
+      "onUse": [
+        "use \"lib/util\"",
+        "offAll(['cb14_0', 'cb14_1', 'cb14_2', 'power14'])",
+        "on('power14off')",
+        "off('lever14')",
+        "on('lever14on')",
+        "powerOff14 = true"
+      ]
+    },
+    { "prefab": "lever", "id": "lever14on", "at": [2, 6], "state": 1, "enabled": false },
+    { "prefab": "lamp", "id": "power14", "at": [3, 6], "color": 2 },
+    { "prefab": "lamp", "id": "power14off", "at": [3, 6], "color": 1, "enabled": false },
+    { "prefab": "smart_crossbow", "id": "cb14_2", "at": [13, 7], "dir": "left", "period": 1.0, "range": 5 },
+    { "prefab": "stairs", "at": [17, 7], "next": "15" },
+    { "prefab": "tablet", "at": [1, 6], "text": "@level.14.t1" }
+  ],
+  "script": "14.dgs"
+}

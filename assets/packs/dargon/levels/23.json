@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.23.name",
+  "tiles": [
+    "##########",
+    "#####.####",
+    "#........#",
+    "#.###.##.#",
+    "##.#####.#",
+    "###..###.#",
+    "##..##..##",
+    "#.##...###",
+    "##########"
+  ],
+  "spawn": [5, 1],
+  "entities": [
+    { "prefab": "item", "at": [1, 7], "item": { "id": "coins", "count": 10 } },
+    { "prefab": "stairs", "at": [5, 3], "next": "22" },
+    { "prefab": "stairs", "at": [8, 2], "next": "24" },
+    { "prefab": "flamethrower", "at": [2, 3], "dir": "down", "length": 3, "stage": 1, "period": 4.0 },
+    { "prefab": "flamethrower", "at": [2, 5], "dir": "right", "length": 3, "stage": 1, "period": 4.0 },
+    { "prefab": "bushes", "at": [2, 4], "width": 3, "height": 3 },
+    { "prefab": "spikes", "at": [5, 7] },
+    { "prefab": "spikes", "at": [6, 7] },
+    { "prefab": "spikes", "at": [6, 6] },
+    { "prefab": "spikes", "at": [7, 6] },
+    { "prefab": "spikes", "at": [8, 5] },
+    { "prefab": "spikes", "at": [8, 4] },
+    { "prefab": "door", "at": [3, 2], "key": "lvl22v_1" },
+    { "prefab": "door", "at": [7, 2], "key": "lvl22v_2" }
+  ]
+}

@@ -1,0 +1,29 @@
+// Таймеры: every() отсчитывает секунды, cancel() его останавливает.
+use "lib/util"
+
+lamps05 = 9
+left05 = 0
+timer05 = -1
+
+def open05() {
+    // Повторное нажатие начинает отсчёт заново.
+    if timer05 >= 0 {
+        cancel(timer05)
+    }
+    off("gate5")
+    left05 = lamps05
+    for k = 0, k < lamps05, k += 1 {
+        on("t5_" + k)
+    }
+    timer05 = every(1, tick05)
+}
+
+def tick05() {
+    left05 -= 1
+    off("t5_" + left05)
+    if left05 == 0 {
+        cancel(timer05)
+        timer05 = -1
+        on("gate5")
+    }
+}

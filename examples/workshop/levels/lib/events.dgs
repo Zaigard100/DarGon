@@ -1,0 +1,47 @@
+// Шина событий уровня. У уровня один хук step(x, y), а слушателей может быть много:
+// onStep(f), onLoop(f), onInit(f) — каждый получает те же аргументы, что и хук.
+// Заодно запоминает, где стоит герой: px, py (телепорт шагом не считается —
+// после него уровень зовёт startAt сам).
+
+stepListeners = []
+loopListeners = []
+initListeners = []
+px = -1
+py = -1
+
+def onStep(f) {
+    push(stepListeners, f)
+}
+
+def onLoop(f) {
+    push(loopListeners, f)
+}
+
+def onInit(f) {
+    push(initListeners, f)
+}
+
+def startAt(x, y) {
+    px = x
+    py = y
+}
+
+def init() {
+    for listener in initListeners {
+        listener()
+    }
+}
+
+def loop(dt) {
+    for listener in loopListeners {
+        listener(dt)
+    }
+}
+
+def step(x, y) {
+    px = x
+    py = y
+    for listener in stepListeners {
+        listener(x, y)
+    }
+}

@@ -1,0 +1,46 @@
+// Общие помощники пака «Мастерская механика».
+// Подключение: use "lib/util" — в скрипте уровня или прямо в обработчике.
+
+// Включить, выключить, переключить объект по id. Выключенный объект не виден,
+// не мешает пройти, не стреляет и не ранит.
+def on(id) {
+    entity(id).enable()
+}
+
+def off(id) {
+    entity(id).disable()
+}
+
+def flip(id) {
+    target = entity(id)
+    target.enabled = !target.enabled
+}
+
+def onAll(ids) {
+    for id in ids {
+        entity(id).enable()
+    }
+}
+
+def offAll(ids) {
+    for id in ids {
+        entity(id).disable()
+    }
+}
+
+// Прямоугольник клеток одного типа: "floor" или "wall".
+def fill(x0, y0, x1, y1, kind) {
+    for yy = y0, yy <= y1, yy += 1 {
+        for xx = x0, xx <= x1, xx += 1 {
+            setTile(xx, yy, kind)
+        }
+    }
+}
+
+// Отложенный вызов f(arg). В цикле нельзя написать after(t, def() { f(k) }):
+// замыкание увидит k после цикла. Здесь аргумент запоминается на каждый вызов.
+def later(seconds, f, arg) {
+    return after(seconds, def() {
+        f(arg)
+    })
+}

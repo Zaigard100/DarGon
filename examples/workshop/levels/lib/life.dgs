@@ -1,0 +1,99 @@
+// Игра «Жизнь» Конвея прямо на клетках карты: живая клетка — пол, мёртвая — стена.
+// lifeStart(x, y, cells) — cells: строки из 0 и 1; lifeStep() — следующее поколение.
+
+life = {x: 0, y: 0, w: 0, h: 0, cells: [], gen: 0}
+
+def lifeStart(x0, y0, cells) {
+    life.x = x0
+    life.y = y0
+    life.h = len(cells)
+    life.w = len(cells[0])
+    life.cells = cells
+    life.gen = 0
+    lifeDraw()
+}
+
+def lifeAlive(cx, cy) {
+    if cx < 0 || cy < 0 || cx >= life.w || cy >= life.h {
+        return 0
+    }
+    return life.cells[cy][cx]
+}
+
+def lifeStep() {
+    grown = array(life.h, life.w)
+    for cy = 0, cy < life.h, cy += 1 {
+        for cx = 0, cx < life.w, cx += 1 {
+            n = 0
+            for dy = -1, dy <= 1, dy += 1 {
+                for dx = -1, dx <= 1, dx += 1 {
+                    if dx != 0 || dy != 0 {
+                        n += lifeAlive(cx + dx, cy + dy)
+                    }
+                }
+            }
+            if n == 3 || (n == 2 && life.cells[cy][cx] == 1) {
+                grown[cy][cx] = 1
+            }
+        }
+    }
+    // Перерисовываются только изменившиеся клетки.
+    old = life.cells
+    life.cells = grown
+    life.gen += 1
+    for cy = 0, cy < life.h, cy += 1 {
+        for cx = 0, cx < life.w, cx += 1 {
+            if old[cy][cx] != grown[cy][cx] {
+                lifeTile(cx, cy)
+            }
+        }
+    }
+}
+
+def lifeTile(cx, cy) {
+    if life.cells[cy][cx] == 1 {
+        setTile(life.x + cx, life.y + cy, "floor")
+    } else {
+        setTile(life.x + cx, life.y + cy, "wall")
+    }
+}
+
+def lifeDraw() {
+    for cy = 0, cy < life.h, cy += 1 {
+        for cx = 0, cx < life.w, cx += 1 {
+            lifeTile(cx, cy)
+        }
+    }
+}
+
+// Живые клетки сейчас.
+def lifeCount() {
+    n = 0
+    for row in life.cells {
+        for c in row {
+            n += c
+        }
+    }
+    return n
+}
+
+// Случайное поле: каждая клетка жива с вероятностью p.
+def lifeRandom(p) {
+    life.cells = array(life.h, life.w)
+    for cy = 0, cy < life.h, cy += 1 {
+        for cx = 0, cx < life.w, cx += 1 {
+            if rand() < p {
+                life.cells[cy][cx] = 1
+            }
+        }
+    }
+    lifeDraw()
+}
+
+// Глайдер — фигура, которая ползёт по диагонали.
+def lifeGlider(cx, cy) {
+    for pt in [[1, 0], [2, 1], [0, 2], [1, 2], [2, 2]] {
+        life.cells[cy + pt[1]][cx + pt[0]] = 1
+        lifeTile(cx + pt[0], cy + pt[1])
+    }
+}

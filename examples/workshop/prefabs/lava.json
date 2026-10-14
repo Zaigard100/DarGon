@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../assets/data/prefab.schema.json",
+  "id": "lava",
+  "description": "Лава: ранит, пока стоишь (щит принимает часть).",
+  "params": { "damage": { "type": "damage", "default": [4, 7], "description": "Урон за касание." } },
+  "components": {
+    "SpriteRef": { "region": "lava" },
+    "Layer": { "z": "floor" },
+    "Hazard": { "damage": "$damage", "kind": "lava", "shieldable": true }
+  }
+}

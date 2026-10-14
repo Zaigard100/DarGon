@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../assets/data/prefab.schema.json",
+  "id": "fake_wall",
+  "description": "Ложная стена: выглядит как стена, мешает пройти; выключенная исчезает.",
+  "placement": "any",
+  "components": { "SpriteRef": { "region": "fake_wall" }, "Layer": { "z": "over" }, "Blocking": {} }
+}

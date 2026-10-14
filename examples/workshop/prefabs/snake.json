@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../assets/data/prefab.schema.json",
+  "id": "snake",
+  "description": "Звено змея: 0 — голова, 1 — тело. Ранит при касании; движет скрипт.",
+  "placement": "any",
+  "params": { "part": { "type": "int", "default": 1, "min": 0, "max": 1, "description": "Голова или тело." } },
+  "components": {
+    "SpriteRef": { "region": "snake", "frame": "$part" },
+    "Layer": { "z": "over" },
+    "Hazard": { "damage": [6, 9], "kind": "snake", "shieldable": true }
+  }
+}

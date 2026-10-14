@@ -1,0 +1,29 @@
+{
+  "$schema": "../../../assets/data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.06.name",
+  "tiles": [
+    "#############",
+    "#...........#",
+    "#...........#",
+    "#...........#",
+    "#...........#",
+    "#...........#",
+    "#...........#",
+    "#...........#",
+    "#############"
+  ],
+  "spawn": [6, 1],
+  "entities": [
+    { "prefab": "tablet", "at": [5, 1], "text": "@level.06.t1" },
+    { "prefab": "sentinel", "id": "s1", "at": [5, 2] },
+    { "prefab": "sentinel", "id": "s2", "at": [9, 3] },
+    { "prefab": "zone", "at": [1, 4], "width": 11, "height": 1, "effect": "heal", "period": 1.0 },
+    { "prefab": "item", "at": [3, 4], "item": { "id": "coins", "count": 5 } },
+    { "prefab": "item", "at": [9, 4], "item": { "id": "coins", "count": 5 } },
+    { "prefab": "sentinel", "id": "s3", "at": [3, 5] },
+    { "prefab": "sentinel", "id": "s4", "at": [8, 6] },
+    { "prefab": "stairs", "at": [6, 7], "next": "07" }
+  ],
+  "script": "06.dgs"
+}

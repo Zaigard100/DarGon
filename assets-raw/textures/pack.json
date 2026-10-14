@@ -1,0 +1,14 @@
+{
+  "filterMin": "Nearest",
+  "filterMag": "Nearest",
+  "paddingX": 2,
+  "paddingY": 2,
+  "duplicatePadding": true,
+  "edgePadding": true,
+  "maxWidth": 2048,
+  "maxHeight": 2048,
+  "pot": true,
+  "stripWhitespaceX": false,
+  "stripWhitespaceY": false,
+  "useIndexes": false
+}

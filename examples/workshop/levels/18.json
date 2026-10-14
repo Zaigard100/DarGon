@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../assets/data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.18.name",
+  "tiles": [
+    "###############",
+    "#.............#",
+    "#.............#",
+    "#.............#",
+    "#.............#",
+    "#.............#",
+    "#.............#",
+    "#.............#",
+    "#.............#",
+    "#.............#",
+    "#######.#######",
+    "#######.#######",
+    "###############"
+  ],
+  "spawn": [7, 4],
+  "entities": [
+    { "prefab": "crystal", "id": "cr18_0", "at": [1, 1] },
+    { "prefab": "crystal", "id": "cr18_1", "at": [13, 1] },
+    { "prefab": "tablet", "at": [2, 6], "text": "@level.18.t1" },
+    { "prefab": "crystal", "id": "cr18_2", "at": [1, 8] },
+    { "prefab": "snake", "id": "sn0", "at": [10, 8], "part": 0 },
+    { "prefab": "snake", "id": "sn1", "at": [11, 8] },
+    { "prefab": "snake", "id": "sn2", "at": [12, 8] },
+    { "prefab": "snake", "id": "sn3", "at": [13, 8] },
+    { "prefab": "snake", "id": "sn4", "at": [13, 8], "enabled": false },
+    { "prefab": "snake", "id": "sn5", "at": [13, 8], "enabled": false },
+    { "prefab": "snake", "id": "sn6", "at": [13, 8], "enabled": false },
+    { "prefab": "gate", "id": "gate18", "at": [7, 10] },
+    { "prefab": "stairs", "at": [7, 11], "next": "19" }
+  ],
+  "script": "18.dgs"
+}

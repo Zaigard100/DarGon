@@ -1,0 +1,87 @@
+// «Саймон»: лампы показывают случайную последовательность, игрок повторяет её на плитах.
+// Три раунда: 3, 4 и 5 цветов. Ошибка — последовательность показывается снова.
+use "lib/events"
+use "lib/util"
+
+plates16 = [[5, 3], [6, 4], [5, 5], [4, 4]]
+lengths16 = [3, 4, 5]
+seq16 = []
+round16 = 0
+pos16 = 0
+ready16 = false
+mistakes16 = 0
+
+def newRound16() {
+    seq16 = []
+    for k = 0, k < lengths16[round16], k += 1 {
+        push(seq16, rand(4))
+    }
+    show16()
+}
+
+def show16() {
+    ready16 = false
+    pos16 = 0
+    for k = 0, k < len(seq16), k += 1 {
+        later(0.8 + 0.9 * k, lampOn16, seq16[k])
+        later(1.4 + 0.9 * k, lampOff16, seq16[k])
+    }
+    after(0.8 + 0.9 * len(seq16), def() {
+        ready16 = true
+    })
+}
+
+def lampOn16(c) {
+    on("lamp16_" + c)
+}
+
+def lampOff16(c) {
+    off("lamp16_" + c)
+}
+
+def release16(c) {
+    off("plate16_" + c + "on")
+    on("plate16_" + c)
+}
+
+def press16(c) {
+    off("plate16_" + c)
+    on("plate16_" + c + "on")
+    later(0.35, release16, c)
+    if ready16 {
+        if c == seq16[pos16] {
+            pos16 += 1
+            if pos16 == len(seq16) {
+                ready16 = false
+                round16 += 1
+                if round16 == len(lengths16) {
+                    win16()
+                } else {
+                    after(1.0, newRound16)
+                }
+            }
+        } else {
+            mistakes16 += 1
+            ready16 = false
+            after(1.0, show16)
+        }
+    }
+}
+
+def win16() {
+    off("gate16")
+    onAll(["lamp16_0", "lamp16_1", "lamp16_2", "lamp16_3"])
+    if mistakes16 == 0 {
+        achieve("simon")
+    }
+}
+
+onStep(def(x, y) {
+    for c = 0, c < len(plates16), c += 1 {
+        if plates16[c][0] == x && plates16[c][1] == y {
+            press16(c)
+        }
+    }
+})
+
+after(1.0, newRound16)

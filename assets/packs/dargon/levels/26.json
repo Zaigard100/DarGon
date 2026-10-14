@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.26.name",
+  "dark": true,
+  "tiles": [
+    "#############",
+    "#.#.#.....###",
+    "##.##.####.##",
+    "###.#..#..###",
+    "##.###.#.####",
+    "##.#..##....#",
+    "###..######.#",
+    "###.####...##",
+    "##.##.##.####",
+    "##.#.##...###",
+    "##.#.#####.##",
+    "#..##.....###",
+    "#############"
+  ],
+  "spawn": [5, 8],
+  "entities": [
+    { "prefab": "stairs", "at": [1, 11], "next": "27" },
+    { "prefab": "item", "at": [1, 1], "item": { "id": "coins", "count": 10 } },
+    { "prefab": "item", "at": [3, 1], "item": { "id": "torch" } },
+    { "prefab": "flamethrower", "at": [8, 10], "dir": "up", "length": 3, "stage": 1, "period": 1.5 },
+    { "prefab": "bushes", "at": [5, 5], "width": 3, "height": 3 },
+    { "prefab": "spikes", "at": [5, 1] },
+    { "prefab": "spikes", "at": [5, 2] },
+    { "prefab": "spikes", "at": [6, 1] },
+    { "prefab": "smart_crossbow", "at": [6, 6], "dir": "left", "range": 8, "diagonal": true }
+  ]
+}

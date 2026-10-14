@@ -1,0 +1,27 @@
+{
+  "$schema": "../../../assets/data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.13.name",
+  "tiles": [
+    "#################",
+    "#.#...........#.#",
+    "#.#...........#.#",
+    "#...............#",
+    "#...............#",
+    "#######.#########",
+    "#######.#########",
+    "#################"
+  ],
+  "spawn": [8, 4],
+  "entities": [
+    { "prefab": "kamikaze", "id": "k13a", "at": [1, 1], "radius": 20, "depth": 40, "speed": 0.5, "enabled": false },
+    { "prefab": "crystal", "id": "crystal13", "at": [8, 1] },
+    { "prefab": "kamikaze", "id": "k13b", "at": [15, 1], "radius": 20, "depth": 40, "speed": 0.5, "enabled": false },
+    { "prefab": "gate", "id": "cage13a", "at": [1, 2] },
+    { "prefab": "gate", "id": "cage13b", "at": [15, 2] },
+    { "prefab": "tablet", "at": [3, 4], "text": "@level.13.t1" },
+    { "prefab": "gate", "id": "exit13", "at": [7, 5] },
+    { "prefab": "stairs", "at": [7, 6], "next": "14" }
+  ],
+  "script": "13.dgs"
+}

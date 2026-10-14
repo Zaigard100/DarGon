@@ -1,0 +1,19 @@
+// Три телепорта в одной клетке; включён один — по кругу, каждые 1.5 с.
+use "lib/util"
+
+tp12 = ["tpR", "tpB", "tpG"]
+lit12 = ["lR", "lB", "lG"]
+active12 = 0
+
+def show12() {
+    for k = 0, k < len(tp12), k += 1 {
+        entity(tp12[k]).enabled = k == active12
+        entity(lit12[k]).enabled = k == active12
+    }
+}
+
+show12()
+every(1.5, def() {
+    active12 = (active12 + 1) % len(tp12)
+    show12()
+})

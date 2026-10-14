@@ -1,0 +1,10 @@
+// Рычаг обесточивает все арбалеты разом. Пройти без него — достижение.
+use "lib/events"
+
+powerOff14 = false
+
+onStep(def(x, y) {
+    if x == 17 && y == 7 && !powerOff14 {
+        achieve("daredevil")
+    }
+})

@@ -1,0 +1,36 @@
+{
+  "$schema": "../prefab.schema.json",
+  "id": "fragile_floor",
+  "description": "Хрупкий пол: каждые period секунд под игроком трескается; после 3 трещин — провал.",
+  "params": {
+    "cracks": {
+      "type": "int",
+      "default": 0,
+      "min": 0,
+      "max": 3,
+      "description": "Трещин в начале: 3 — уже провал."
+    },
+    "period": {
+      "type": "number",
+      "default": 1.0,
+      "min": 0.1,
+      "description": "Секунды между трещинами."
+    }
+  },
+  "components": {
+    "SpriteRef": {},
+    "Layer": {
+      "z": "floor"
+    },
+    "Fragile": {
+      "cracks": "$cracks",
+      "maxCracks": 3,
+      "delay": "$period"
+    },
+    "Hazard": {
+      "damage": "kill",
+      "kind": "fall",
+      "whenBroken": true
+    }
+  }
+}

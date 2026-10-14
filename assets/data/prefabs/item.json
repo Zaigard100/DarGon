@@ -1,0 +1,21 @@
+{
+  "$schema": "../prefab.schema.json",
+  "id": "item",
+  "description": "Предмет на полу. Подбирается «использовать», если в инвентаре есть место.",
+  "params": {
+    "item": {
+      "type": "item"
+    }
+  },
+  "components": {
+    "Layer": {
+      "z": "floor"
+    },
+    "Interactable": {
+      "reach": "self"
+    },
+    "Pickup": {
+      "item": "$item"
+    }
+  }
+}

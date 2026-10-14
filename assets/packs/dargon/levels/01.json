@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.01.name",
+  "dark": true,
+  "tiles": [
+    ".......###",
+    "#######.##",
+    "###...##.#",
+    ".##.#####.",
+    ".#.#.####.",
+    "..###.##.#",
+    "####.#..##",
+    "####.####.",
+    "##....###.",
+    "...###...#"
+  ],
+  "spawn": [0, 9],
+  "entities": [
+    { "prefab": "stairs", "at": [0, 0], "next": "02", "flip": true },
+    { "prefab": "item", "at": [0, 3], "item": { "id": "coins", "count": 5 } }
+  ]
+}

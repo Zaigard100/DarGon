@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../assets/data/prefab.schema.json",
+  "id": "lamp",
+  "description": "Лампа: 0 — погасшая, 1–4 — красная, зелёная, синяя, жёлтая. Ставится и на стену.",
+  "placement": "any",
+  "params": { "color": { "type": "int", "default": 0, "min": 0, "max": 4, "description": "Цвет." } },
+  "components": { "SpriteRef": { "region": "lamp", "frame": "$color" }, "Layer": { "z": "floor" } }
+}

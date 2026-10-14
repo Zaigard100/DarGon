@@ -1,0 +1,29 @@
+{
+  "$schema": "../../../data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.06.name",
+  "dark": true,
+  "tiles": [
+    "##.###...#",
+    "#.#.#.###.",
+    "#.#.#.###.",
+    "#.#.#.#...",
+    "#.#.#.#.##",
+    "..#.#.#...",
+    "####.####.",
+    "...##.###.",
+    ".#.#.#.##.",
+    ".#...#...."
+  ],
+  "spawn": [0, 9],
+  "entities": [
+    { "prefab": "hidden_trap", "at": [7, 5] },
+    { "prefab": "hidden_trap", "at": [7, 3] },
+    { "prefab": "hidden_trap", "at": [5, 3] },
+    { "prefab": "teleport", "at": [7, 4], "target": [1, 5] },
+    { "prefab": "stairs", "at": [0, 5], "next": "07" },
+    { "prefab": "item", "at": [8, 0], "item": { "id": "potion" } },
+    { "prefab": "crossbow", "at": [-1, 7], "dir": "right", "period": 1.0 },
+    { "prefab": "crossbow", "at": [7, 10], "dir": "up" }
+  ]
+}

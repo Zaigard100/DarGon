@@ -1,0 +1,40 @@
+{
+  "$schema": "../prefab.schema.json",
+  "id": "door",
+  "description": "Дверь с замком: открывается и закрывается с соседней клетки ключом key.",
+  "params": {
+    "key": {
+      "type": "string"
+    },
+    "open": {
+      "type": "bool",
+      "default": false
+    },
+    "facing": {
+      "type": "int",
+      "default": 0,
+      "min": 0,
+      "max": 3,
+      "description": "Кадр спрайта двери."
+    }
+  },
+  "components": {
+    "SpriteRef": {
+      "region": "doors",
+      "frame": "$facing"
+    },
+    "Layer": {
+      "z": "over"
+    },
+    "Blocking": {},
+    "Interactable": {
+      "reach": "adjacent"
+    },
+    "Lock": {
+      "key": "$key"
+    },
+    "Door": {
+      "open": "$open"
+    }
+  }
+}

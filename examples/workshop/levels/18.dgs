@@ -1,0 +1,69 @@
+// Змей: голова идёт к герою (px, py из lib/events), тело — следом. Всё — moveTo().
+use "math"
+use "lib/events"
+use "lib/util"
+
+startAt(7, 4)
+segs18 = ["sn0", "sn1", "sn2", "sn3", "sn4", "sn5", "sn6"]
+body18 = [[10, 8], [11, 8], [12, 8], [13, 8]]
+crystals18 = [[1, 1], [13, 1], [1, 8]]
+left18 = len(crystals18)
+
+def inside18(x, y) {
+    return x >= 1 && x <= 13 && y >= 1 && y <= 9
+}
+
+def place18() {
+    for k = 0, k < len(body18), k += 1 {
+        entity(segs18[k]).moveTo(body18[k][0], body18[k][1])
+    }
+}
+
+def move18() {
+    head = body18[0]
+    sx = sign(px - head[0])
+    sy = sign(py - head[1])
+    tries = [[0, sy], [sx, 0]]
+    if abs(px - head[0]) >= abs(py - head[1]) {
+        tries = [[sx, 0], [0, sy]]
+    }
+    moved = false
+    for t in tries {
+        nx = head[0] + t[0]
+        ny = head[1] + t[1]
+        free = inside18(nx, ny) && (nx != body18[1][0] || ny != body18[1][1])
+        if !moved && (t[0] != 0 || t[1] != 0) && free {
+            grown = [[nx, ny]]
+            for k = 0, k < len(body18) - 1, k += 1 {
+                push(grown, body18[k])
+            }
+            body18 = grown
+            place18()
+            moved = true
+        }
+    }
+}
+
+def grow18() {
+    if len(body18) < len(segs18) {
+        push(body18, body18[len(body18) - 1])
+        on(segs18[len(body18) - 1])
+        place18()
+    }
+}
+
+snakeTimer18 = every(0.6, move18)
+
+onStep(def(x, y) {
+    for k = 0, k < len(crystals18), k += 1 {
+        if crystals18[k][0] == x && crystals18[k][1] == y && entity("cr18_" + k).enabled {
+            off("cr18_" + k)
+            left18 -= 1
+            grow18()
+            if left18 == 0 {
+                cancel(snakeTimer18)
+                off("gate18")
+            }
+        }
+    }
+})

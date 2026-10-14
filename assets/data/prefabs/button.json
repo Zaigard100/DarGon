@@ -1,0 +1,20 @@
+{
+  "$schema": "../prefab.schema.json",
+  "id": "button",
+  "description": "Кнопка: встать и нажать «использовать» — выполняется onUse.",
+  "events": [
+    "use"
+  ],
+  "components": {
+    "SpriteRef": {
+      "region": "button"
+    },
+    "Layer": {
+      "z": "floor"
+    },
+    "Interactable": {
+      "reach": "self"
+    },
+    "ScriptHandlers": {}
+  }
+}

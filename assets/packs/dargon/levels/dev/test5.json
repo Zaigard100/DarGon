@@ -1,0 +1,27 @@
+{
+  "$schema": "../../../../data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.dev.test5.name",
+  "dark": true,
+  "tiles": [
+    "#...........#",
+    ".............",
+    ".............",
+    ".............",
+    ".............",
+    ".............",
+    ".............",
+    ".............",
+    ".............",
+    ".............",
+    ".............",
+    ".............",
+    "#...........#"
+  ],
+  "spawn": [1, 12],
+  "entities": [
+    { "prefab": "stairs", "at": [0, 3], "next": "dev/test1", "flip": true },
+    { "prefab": "zone", "at": [0, 0], "width": 13, "height": 13, "effect": "heal", "period": 5.0 },
+    { "prefab": "smart_crossbow", "at": [6, 6], "dir": "left", "range": 4, "diagonal": true }
+  ]
+}

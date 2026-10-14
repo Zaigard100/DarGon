@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "items.schema.json",
+  "title": "DarGon: каталог предметов",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["items"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "items": {
+      "type": "object",
+      "propertyNames": { "pattern": "^[a-z][a-z0-9_]*$" },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["icon", "effect"],
+        "properties": {
+          "name": { "type": "string", "description": "Ключ локализации; по умолчанию @item.<id>." },
+          "icon": { "type": "string", "description": "Кадр в атласе." },
+          "maxStack": { "type": "integer", "minimum": 1, "default": 99 },
+          "effect": { "enum": ["coins", "heal", "shield", "light", "trap_sight", "speed", "slow", "key", "egg"] },
+          "args": { "type": "object", "description": "Параметры эффекта." },
+          "fields": {
+            "type": "object",
+            "propertyNames": { "not": { "enum": ["id", "count"] } },
+            "additionalProperties": { "$ref": "param.schema.json" }
+          },
+          "description": { "type": "string" }
+        }
+      }
+    }
+  }
+}

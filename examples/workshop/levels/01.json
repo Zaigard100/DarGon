@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../assets/data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.01.name",
+  "tiles": [
+    "#############",
+    "#...........#",
+    "#.#########.#",
+    "#.#.......#.#",
+    "#.#.......#.#",
+    "#.#.......#.#",
+    "#.###...###.#",
+    "#...........#",
+    "#############"
+  ],
+  "spawn": [1, 1],
+  "entities": [
+    { "prefab": "deco", "at": [4, 1], "kind": 4 },
+    { "prefab": "tablet", "at": [8, 1], "text": "@level.01.t1" },
+    { "prefab": "chest", "at": [6, 3], "items": [{ "id": "potion" }, { "id": "coins", "count": 10 }] },
+    { "prefab": "deco", "at": [4, 4], "kind": 0 },
+    { "prefab": "item", "at": [6, 4], "item": { "id": "coins", "count": 15 } },
+    { "prefab": "deco", "at": [8, 4], "kind": 0 },
+    { "prefab": "lamp", "at": [4, 5], "color": 0 },
+    { "prefab": "lamp", "id": "lampA", "at": [4, 5], "color": 4 },
+    { "prefab": "item", "at": [6, 5], "item": { "id": "speed_potion", "power": 1.5 } },
+    { "prefab": "lamp", "at": [8, 5], "color": 0 },
+    { "prefab": "lamp", "id": "lampB", "at": [8, 5], "color": 4 },
+    { "prefab": "tablet", "at": [6, 6], "text": "@level.01.t2" },
+    { "prefab": "stairs", "at": [6, 7], "next": "02" }
+  ],
+  "script": "01.dgs"
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "../prefab.schema.json",
+  "id": "spikes",
+  "description": "Шипы: после наступания через period выдвигаются и убивают; убираются через 2×period.",
+  "params": {
+    "active": {
+      "type": "bool",
+      "default": false,
+      "description": "Выдвинуты в начале уровня."
+    },
+    "period": {
+      "type": "number",
+      "default": 1.5,
+      "min": 0.1,
+      "description": "Секунды до срабатывания."
+    }
+  },
+  "components": {
+    "SpriteRef": {
+      "region": "spike0",
+      "offset": [-1, -1]
+    },
+    "Layer": {
+      "z": "floor"
+    },
+    "Hazard": {
+      "damage": [26, 34],
+      "kind": "spikes",
+      "shieldable": true
+    },
+    "TriggeredCycle": {
+      "active": "$active",
+      "delay": "$period"
+    }
+  }
+}

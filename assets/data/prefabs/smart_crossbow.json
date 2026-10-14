@@ -1,0 +1,49 @@
+{
+  "$schema": "../prefab.schema.json",
+  "id": "smart_crossbow",
+  "description": "Арбалет с наведением: стреляет, только если игрок ближе range, и поворачивается к нему.",
+  "placement": "any",
+  "params": {
+    "dir": {
+      "type": "direction8",
+      "default": "left"
+    },
+    "period": {
+      "type": "number",
+      "default": 4.0,
+      "min": 0.1
+    },
+    "range": {
+      "type": "int",
+      "min": 1,
+      "description": "Дальность в клетках."
+    },
+    "diagonal": {
+      "type": "bool",
+      "default": false,
+      "description": "Стрелять по диагонали."
+    }
+  },
+  "components": {
+    "SpriteRef": {
+      "region": "crossbow",
+      "frame": 1,
+      "angle": 180
+    },
+    "Layer": {
+      "z": "over"
+    },
+    "Facing": {
+      "dir": "$dir"
+    },
+    "Emitter": {
+      "kind": "arrow",
+      "dir": "$dir",
+      "period": "$period"
+    },
+    "AimAtPlayer": {
+      "range": "$range",
+      "diagonal": "$diagonal"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "../prefab.schema.json",
+  "id": "zone",
+  "description": "Область width×height: раз в period секунд лечит или ранит игрока внутри.",
+  "placement": "any",
+  "params": {
+    "width": {
+      "type": "int",
+      "min": 1
+    },
+    "height": {
+      "type": "int",
+      "min": 1
+    },
+    "effect": {
+      "type": "string",
+      "values": [
+        "heal",
+        "damage"
+      ]
+    },
+    "period": {
+      "type": "number",
+      "min": 0.1
+    }
+  },
+  "components": {
+    "Area": {
+      "width": "$width",
+      "height": "$height"
+    },
+    "AreaEffect": {
+      "effect": "$effect",
+      "period": "$period"
+    }
+  }
+}

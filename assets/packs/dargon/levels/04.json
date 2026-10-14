@@ -1,0 +1,36 @@
+{
+  "$schema": "../../../data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.04.name",
+  "dark": true,
+  "tiles": [
+    "......##....#.#",
+    "######.#.##.#.#",
+    "....#.##.#.##.#",
+    "#.#.##.#.#.#.#.",
+    ".##.#.##.##.##.",
+    "#.####.##.###.#",
+    "......####.#.#.",
+    "#######.#######",
+    "..##..#..#.....",
+    "#.#.#.#..#.###.",
+    "..#.#.##.#.#.#.",
+    ".##.#.##.#.#.#.",
+    "...##..#.#.#.#.",
+    "##.###.#.#.#.#.",
+    "..#.#..##.###.#"
+  ],
+  "spawn": [0, 14],
+  "entities": [
+    { "prefab": "hidden_trap", "at": [3, 14] },
+    { "prefab": "hidden_trap", "at": [0, 10] },
+    { "prefab": "hidden_trap", "at": [0, 8] },
+    { "prefab": "hidden_trap", "at": [0, 6] },
+    { "prefab": "teleport", "at": [5, 14], "target": [0, 0] },
+    { "prefab": "teleport", "at": [3, 4], "target": [13, 0] },
+    { "prefab": "teleport", "at": [10, 6], "target": [12, 10] },
+    { "prefab": "teleport", "at": [14, 6], "target": [0, 14] },
+    { "prefab": "teleport", "at": [12, 6], "target": [0, 0] },
+    { "prefab": "stairs", "at": [7, 7], "next": "05" }
+  ]
+}

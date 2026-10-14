@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.16.name",
+  "dark": true,
+  "tiles": [
+    "..........",
+    "###..#.##.",
+    "###.##..#.",
+    "#...######",
+    "##########",
+    "...##..#..",
+    ".####.##.#",
+    "...##....#",
+    ".#######.#",
+    ".####....."
+  ],
+  "spawn": [0, 9],
+  "entities": [
+    { "prefab": "teleport", "at": [2, 7], "target": [0, 0] },
+    { "prefab": "teleport", "at": [9, 2], "target": [5, 9] },
+    { "prefab": "stairs", "id": "Stair", "at": [9, 5], "enabled": false, "next": "17" },
+    { "prefab": "item", "at": [1, 3], "item": { "id": "coins", "count": 20 } },
+    { "prefab": "fragile_floor", "id": "FirstFT2", "at": [9, 1], "cracks": 3 },
+    { "prefab": "fragile_floor", "id": "FirstFT1", "at": [1, 7], "cracks": 3 },
+    { "prefab": "bushes", "at": [3, -1], "width": 5, "height": 6 },
+    { "prefab": "button", "at": [2, 5], "onUse": "entity('FirstFT1').disable()" },
+    { "prefab": "button", "at": [7, 2], "onUse": "entity('FirstFT2').disable()" },
+    { "prefab": "button", "at": [6, 5], "onUse": "entity('Stair').enable()" }
+  ]
+}

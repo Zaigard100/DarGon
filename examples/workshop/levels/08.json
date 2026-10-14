@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../assets/data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.08.name",
+  "dark": true,
+  "checkpoint": true,
+  "tiles": [
+    "###############",
+    "#...#...#.....#",
+    "###.#.#.#.###.#",
+    "#...#.#...#...#",
+    "#.#########.#.#",
+    "#...........#.#",
+    "#############.#",
+    "#.....#.....#.#",
+    "#.#.###.#.###.#",
+    "#.#.....#.....#",
+    "###############"
+  ],
+  "spawn": [1, 1],
+  "entities": [
+    { "prefab": "stairs", "at": [13, 9], "next": "09" },
+    { "prefab": "chest", "at": [5, 3], "items": [{ "id": "trap_sight" }, { "id": "coins", "count": 20 }] },
+    { "prefab": "zone", "at": [1, 9], "width": 1, "height": 1, "effect": "damage", "period": 1.0 },
+    { "prefab": "item", "at": [1, 9], "item": { "id": "coins", "count": 12 } },
+    { "prefab": "hidden_trap", "at": [5, 7] },
+    { "prefab": "item", "at": [5, 7], "item": { "id": "coins", "count": 7 } },
+    { "prefab": "hidden_trap", "at": [11, 7] },
+    { "prefab": "item", "at": [11, 7], "item": { "id": "coins", "count": 7 } },
+    { "prefab": "lamp", "id": "firefly", "at": [1, 1], "color": 4 },
+    { "prefab": "tablet", "at": [2, 1], "text": "@level.08.t1" }
+  ],
+  "script": "08.dgs"
+}

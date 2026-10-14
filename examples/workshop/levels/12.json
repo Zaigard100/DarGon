@@ -1,0 +1,38 @@
+{
+  "$schema": "../../../assets/data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.12.name",
+  "tiles": [
+    "###################",
+    "#.....#.....#.....#",
+    "#.....#.....#.....#",
+    "#.....#.....###.###",
+    "#.....#.....#.....#",
+    "###################",
+    "#.................#",
+    "#.................#",
+    "###################"
+  ],
+  "spawn": [1, 7],
+  "entities": [
+    { "prefab": "item", "at": [3, 2], "item": { "id": "coins", "count": 15 } },
+    { "prefab": "item", "at": [9, 2], "item": { "id": "key", "key": "teal", "color": "#40D8C8" } },
+    { "prefab": "stairs", "at": [15, 2], "next": "13" },
+    { "prefab": "hidden_trap", "at": [9, 3] },
+    { "prefab": "door", "at": [15, 3], "key": "teal" },
+    { "prefab": "teleport", "at": [2, 4], "target": [8, 7] },
+    { "prefab": "teleport", "at": [8, 4], "target": [8, 7] },
+    { "prefab": "teleport", "at": [14, 4], "target": [8, 7] },
+    { "prefab": "tablet", "at": [1, 6], "text": "@level.12.t1" },
+    { "prefab": "lamp", "at": [5, 6], "color": 0 },
+    { "prefab": "lamp", "id": "lR", "at": [5, 6], "color": 1, "enabled": false },
+    { "prefab": "lamp", "at": [7, 6], "color": 0 },
+    { "prefab": "lamp", "id": "lB", "at": [7, 6], "color": 3, "enabled": false },
+    { "prefab": "lamp", "at": [9, 6], "color": 0 },
+    { "prefab": "lamp", "id": "lG", "at": [9, 6], "color": 2, "enabled": false },
+    { "prefab": "teleport", "id": "tpR", "at": [9, 7], "target": [2, 3] },
+    { "prefab": "teleport", "id": "tpB", "at": [9, 7], "target": [8, 2] },
+    { "prefab": "teleport", "id": "tpG", "at": [9, 7], "target": [16, 4] }
+  ],
+  "script": "12.dgs"
+}

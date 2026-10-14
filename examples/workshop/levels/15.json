@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../assets/data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.15.name",
+  "legend": { ".": "floor", "#": "wall", "o": "floor", "~": "wall" },
+  "tiles": [
+    "####################",
+    "#~~~~~~~~~~~~~~~~~~#",
+    "#~~o~~~~~~~~~~~oo~~#",
+    "#~~~o~~~~o~~~~oo~~~#",
+    "#~ooo~~~~o~~~~~o~~~#",
+    "#~~~~~~~~o~~~~~~~~~#",
+    "#~~~~~~~~~~~~ooo~~~#",
+    "#~~~~~~~~~~~ooo~~~~#",
+    "#~~~~~~~~~~~~~~~~~~#",
+    "####################",
+    "#..................#",
+    "#...............#..#",
+    "####################"
+  ],
+  "spawn": [1, 10],
+  "entities": [
+    { "prefab": "button", "at": [4, 10], "onUse": "running15 = !running15" },
+    { "prefab": "button", "at": [7, 10], "onUse": ["if !running15 {", "    gen15()", "}"] },
+    { "prefab": "button", "at": [10, 10], "onUse": "lifeGlider(1, 1)" },
+    { "prefab": "button", "at": [13, 10], "onUse": "lifeRandom(0.3)" },
+    { "prefab": "gate", "id": "gate15", "at": [16, 10] },
+    { "prefab": "stairs", "at": [18, 10], "next": "16" },
+    { "prefab": "tablet", "at": [3, 11], "text": "@level.15.t1" }
+  ],
+  "script": "15.dgs",
+  "comment": "Своя легенда: o — живая клетка (пол), ~ — мёртвая (стена)."
+}

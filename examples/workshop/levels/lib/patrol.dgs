@@ -1,0 +1,39 @@
+// Движение объектов по маршруту таймером every(): стражи, светлячки, змеи.
+use "math"
+use "lib/util"
+
+// Клетки по прямой от (x0, y0) до (x1, y1) включительно.
+def line(x0, y0, x1, y1) {
+    points = []
+    n = max(abs(x1 - x0), abs(y1 - y0))
+    for k = 0, k <= n, k += 1 {
+        push(points, [x0 + sign(x1 - x0) * k, y0 + sign(y1 - y0) * k])
+    }
+    return points
+}
+
+// Туда и обратно по точкам, шаг раз в period секунд, с точки start.
+// Возвращает номер таймера: cancel(номер) остановит.
+def patrol(id, points, period, start) {
+    state = {at: start, dir: 1}
+    entity(id).moveTo(points[start][0], points[start][1])
+    return every(period, def() {
+        nextAt = state.at + state.dir
+        if nextAt < 0 || nextAt >= len(points) {
+            state.dir = -state.dir
+            nextAt = state.at + state.dir
+        }
+        state.at = nextAt
+        entity(id).moveTo(points[nextAt][0], points[nextAt][1])
+    })
+}
+
+// По кругу: после последней точки — снова первая.
+def circuit(id, points, period, start) {
+    state = {at: start}
+    entity(id).moveTo(points[start][0], points[start][1])
+    return every(period, def() {
+        state.at = (state.at + 1) % len(points)
+        entity(id).moveTo(points[state.at][0], points[state.at][1])
+    })
+}

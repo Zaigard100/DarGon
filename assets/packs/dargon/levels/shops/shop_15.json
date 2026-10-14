@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../../data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.shops.shop_15.name",
+  "tiles": [
+    "#.#.##",
+    "#...##",
+    ".....#"
+  ],
+  "spawn": [0, 2],
+  "entities": [
+    { "prefab": "stairs", "at": [4, 2], "next": "16" },
+    {
+      "prefab": "shop",
+      "at": [2, 0],
+      "offers": [
+        { "item": { "id": "shield" }, "price": 15 },
+        { "item": { "id": "torch" }, "price": 8 },
+        { "item": { "id": "trap_sight" }, "price": 20 }
+      ]
+    },
+    { "prefab": "zone", "at": [0, 0], "width": 6, "height": 3, "effect": "heal", "period": 0.5 }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "manifest.schema.json",
+  "title": "DarGon: манифест движка",
+  "description": "Префабы, которые есть в игре: на Android и из classpath каталоги нельзя перечислить. Уровни — в паках (packs/<id>/pack.json).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["prefabs"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "prefabs": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+      "description": "Файлы data/prefabs/<id>.json."
+    }
+  }
+}

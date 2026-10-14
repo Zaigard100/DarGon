@@ -1,0 +1,51 @@
+{
+  "$schema": "../../../data/level.schema.json",
+  "formatVersion": 1,
+  "name": "@level.21.name",
+  "dark": true,
+  "tiles": [
+    "#################",
+    "##.###....#######",
+    "#.###############",
+    "#.##########..###",
+    "#.##......###.###",
+    "#.#.######.##.###",
+    "##.####.###..#.##",
+    "#.##.##.#######.#",
+    "##.#.###.#####.##",
+    "##.##.###...###.#",
+    "##.#.##.###.###.#",
+    "###.#.##.###.#.##",
+    "##.###.#.##.##.##",
+    "##.####.##.####.#",
+    "#.#########.###.#",
+    "#################"
+  ],
+  "spawn": [6, 4],
+  "entities": [
+    { "prefab": "hidden_trap", "at": [1, 14] },
+    { "prefab": "hidden_trap", "at": [11, 14] },
+    { "prefab": "hidden_trap", "at": [12, 3] },
+    { "prefab": "stairs", "at": [9, 1], "next": "22" },
+    { "prefab": "fragile_floor", "id": "FT1", "at": [1, 2], "enabled": false, "cracks": 3 },
+    { "prefab": "fragile_floor", "id": "FT3", "at": [15, 13], "enabled": false, "cracks": 3 },
+    { "prefab": "flamethrower", "at": [10, 11], "dir": "right", "length": 3, "stage": 1, "period": 4.0 },
+    { "prefab": "flamethrower", "at": [10, 11], "dir": "up", "length": 3, "stage": 1, "period": 4.0 },
+    { "prefab": "flamethrower", "at": [10, 11], "dir": "left", "length": 3, "stage": 1, "period": 4.0 },
+    { "prefab": "flamethrower", "at": [10, 11], "dir": "down", "length": 3, "stage": 1, "period": 4.0 },
+    { "prefab": "button", "id": "BT1", "at": [2, 1], "onUse": ["self.disable()", "entity('FT1').enable()"] },
+    {
+      "prefab": "button",
+      "id": "BT2",
+      "at": [7, 10],
+      "onUse": [
+        "self.disable()",
+        "setTile(5, 3, 'wall')",
+        "setTile(6, 3, 'floor')",
+        "setTile(7, 3, 'wall')",
+        "setTile(6, 2, 'floor')"
+      ]
+    },
+    { "prefab": "button", "id": "BT3", "at": [15, 14], "onUse": ["self.disable()", "entity('FT3').enable()"] }
+  ]
+}
